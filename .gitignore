@@ -1,0 +1,5 @@
+node_modules/
+.env
+data.json
+data.before-production-reset.json
+npm-debug.log*

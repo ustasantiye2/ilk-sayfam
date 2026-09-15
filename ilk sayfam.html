@@ -1,0 +1,1026 @@
+﻿<!doctype html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>USTAŞANTİYE | Şantiyenin ihtiyacı burada</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+		:root { --ink:#18221d; --muted:#718078; --paper:#f4f4ef; --card:#fff; --line:#dfe4dd; --lime:#c7f36b; --forest:#183d32; --orange:#ef704d; --shadow:0 20px 60px rgba(24,61,50,.1); }
+		* { box-sizing:border-box; }
+		body { margin:0; color:var(--ink); background:var(--paper); font-family:'DM Sans',sans-serif; }
+		button,input,select,textarea { font:inherit; }
+		button { cursor:pointer; }
+		button:focus:not(:focus-visible),a:focus:not(:focus-visible),select:focus:not(:focus-visible),input:focus:not(:focus-visible),textarea:focus:not(:focus-visible) { outline:none; }
+		button,a { -webkit-tap-highlight-color:transparent; }
+		.topbar { height:6px; background:var(--lime); }
+		.shell { max-width:1380px; margin:auto; padding:0 42px 70px; }
+		header { height:88px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+		.logo { display:flex; gap:10px; align-items:center; color:var(--ink); text-decoration:none; font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; letter-spacing:-.7px; }
+		.logo-mark { display:grid; place-items:center; width:38px; height:38px; color:var(--forest); background:var(--lime); border-radius:11px; transform:rotate(-7deg); font-size:20px; }
+		nav { display:flex; gap:30px; align-items:center; }
+		nav a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; }
+		nav a.active,nav a:hover { color:var(--ink); }
+		.auth-only[hidden] { display:none; }
+		.header-actions { display:flex; gap:10px; align-items:center; }
+		.user-actions { display:flex; gap:8px; align-items:center; }
+		.user-actions[hidden],.auth-actions[hidden] { display:none; }
+		.icon-action { position:relative; display:inline-flex; align-items:center; gap:7px; padding:10px 12px; color:var(--ink); background:white; border:1px solid var(--line); border-radius:8px; font-size:11px; font-weight:700; }
+		.icon-action:hover { border-color:var(--lime); background:#f7faf4; }
+		.notification-dot { display:none; width:7px; height:7px; border-radius:50%; background:var(--orange); }
+		.notification-dot.active { display:inline-block; }
+		.ghost,.primary { border-radius:8px; padding:11px 16px; font-size:12px; font-weight:700; }
+		.ghost { color:var(--ink); background:transparent; border:1px solid var(--line); }
+		.primary { color:var(--forest); background:var(--lime); border:1px solid var(--lime); }
+		.hero { position:relative; display:grid; grid-template-columns:minmax(0,1fr) 390px; gap:42px; align-items:end; min-height:380px; padding:75px 0 55px; overflow:hidden; }
+		.eyebrow { display:flex; gap:9px; align-items:center; color:var(--orange); font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; }
+		.eyebrow i { width:7px; height:7px; border-radius:50%; background:var(--orange); }
+		h1 { max-width:760px; margin:18px 0 20px; font-family:'Space Grotesk',sans-serif; font-size:clamp(45px,6vw,79px); line-height:.96; letter-spacing:-4px; }
+		h1 em { color:var(--orange); font-style:normal; }
+		.hero-copy { max-width:520px; color:var(--muted); font-size:15px; line-height:1.65; }
+		.hero-note { position:relative; z-index:1; padding:25px; color:white; background:var(--forest); border-radius:15px; box-shadow:var(--shadow); }
+		.hero-note small { color:#b5c9bd; font-size:11px; text-transform:uppercase; letter-spacing:1px; }
+		.hero-note strong { display:block; margin:17px 0 25px; font-family:'Space Grotesk',sans-serif; font-size:29px; line-height:1.05; letter-spacing:-1.2px; }
+		.hero-note span { display:flex; justify-content:space-between; padding-top:14px; border-top:1px solid rgba(255,255,255,.2); color:#c8d4cc; font-size:11px; }
+		.section-head { display:flex; justify-content:space-between; align-items:end; margin:28px 0 18px; }
+		.section-head h2 { margin:0; font-family:'Space Grotesk',sans-serif; font-size:25px; letter-spacing:-1px; }
+		.section-head p { margin:0; color:var(--muted); font-size:12px; }
+		.announcement-rail { display:flex; gap:12px; overflow-x:auto; padding:4px 2px 10px; scroll-behavior:smooth; }
+		.announcement-rail::-webkit-scrollbar { height:7px; }
+		.announcement-rail::-webkit-scrollbar-thumb { background:rgba(24,61,50,.18); border-radius:999px; }
+		.support-banner { display:flex; align-items:center; justify-content:space-between; gap:22px; padding:20px 24px; margin-bottom:12px; color:var(--forest); background:linear-gradient(135deg,#f4f9df,#ffffff); border-color:#dce8bd; }
+		.support-banner-copy { width:100%; min-width:0; }
+		.support-banner h2 { margin:0 0 7px; font-family:'Space Grotesk',sans-serif; font-size:20px; letter-spacing:-.5px; }
+		.support-banner p { display:flex; align-items:center; flex-wrap:wrap; gap:10px 28px; width:100%; margin:0; color:#536159; font-size:12px; line-height:1.6; }
+		.support-banner p span { flex:1 1 auto; min-width:0; }
+		.support-banner-button { flex:0 0 auto; margin-left:auto; padding:11px 16px; color:var(--forest); background:var(--lime); border:1px solid var(--lime); border-radius:8px; font-size:12px; font-weight:800; white-space:nowrap; }
+		.support-banner-button:hover { background:#d5fa87; }
+		.announcement-item { display:block; min-width:260px; max-width:320px; background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:0 12px 24px rgba(24,61,50,.04); flex:0 0 auto; overflow:hidden; }
+		.announcement-header { display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%; padding:16px 16px 10px; background:linear-gradient(135deg,#f5f9ed,#ffffff); border:0; color:var(--ink); text-align:left; cursor:pointer; }
+		.announcement-header strong { display:block; font-size:13px; line-height:1.4; }
+		.announcement-header small { display:block; color:var(--muted); font-size:10px; margin-top:4px; }
+		.announcement-tag { display:inline-flex; align-items:center; justify-content:center; padding:6px 8px; border-radius:999px; background:#edf8d9; color:var(--forest); font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+		.announcement-body { max-height:0; overflow:hidden; padding:0 16px; transition:max-height .35s ease, padding .25s ease; }
+		.announcement-item.open .announcement-body { max-height:220px; padding:0 16px 16px; }
+		.announcement-body p { margin:0; color:#536159; font-size:12px; line-height:1.7; }
+		.announcement-detail-modal { display:none; position:fixed; inset:0; z-index:50; place-items:center; padding:20px; background:rgba(12,26,21,.58); }
+		.announcement-detail-modal.open { display:grid; }
+		.announcement-detail-panel { width:min(100%, 760px); max-height:80vh; display:grid; grid-template-rows:auto 1fr; background:#fff; border:1px solid var(--line); border-radius:18px; box-shadow:0 30px 70px rgba(20,35,28,.22); overflow:hidden; }
+		.announcement-detail-head { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:18px 20px; background:linear-gradient(135deg,#183d32,#214e41); color:white; }
+		.announcement-detail-head h3 { margin:0; font-family:'Space Grotesk',sans-serif; font-size:24px; letter-spacing:-.7px; }
+		.announcement-detail-body { padding:20px; overflow:auto; }
+		.announcement-detail-body p { margin:0; color:#425148; font-size:14px; line-height:1.9; white-space:pre-wrap; }
+		.filterbar { display:flex; gap:8px; flex-wrap:wrap; padding:10px; margin-bottom:16px; background:var(--card); border:1px solid var(--line); border-radius:12px; }
+		.filterbar select,.filterbar input { min-width:150px; padding:11px 12px; color:var(--ink); background:#f6f8f4; border:1px solid transparent; border-radius:7px; outline:0; font-size:12px; }
+		.filterbar input { flex:1; min-width:200px; }
+		.filterbar select:focus,.filterbar input:focus { border-color:var(--lime); }
+		.listing-layout { display:grid; grid-template-columns:minmax(0,1fr) 275px; gap:20px; align-items:start; }
+		.feed { display:grid; gap:10px; }
+		.listing { padding:20px; background:var(--card); border:1px solid var(--line); border-radius:13px; transition:transform .2s,box-shadow .2s; }
+		.listing:hover { transform:translateY(-2px); box-shadow:var(--shadow); }
+		.listing-top { display:flex; justify-content:space-between; gap:15px; }
+		.person { display:flex; gap:11px; align-items:center; }
+		.person-clickable { cursor:pointer; }
+		.person-clickable:hover strong { color:var(--orange); }
+		.avatar { display:grid; place-items:center; width:42px; height:42px; color:white; background:var(--forest); border-radius:11px; font-family:'Space Grotesk',sans-serif; font-weight:700; }
+		.person strong { display:block; font-size:13px; }
+		.person small { display:block; margin-top:4px; color:var(--muted); font-size:10px; }
+		.badge { display:inline-block; margin-left:5px; padding:3px 6px; color:var(--forest); background:var(--lime); border-radius:4px; font-size:9px; font-weight:700; vertical-align:middle; }
+		.listing-tag { height:max-content; padding:6px 8px; color:var(--orange); background:#fff1ed; border-radius:5px; font-size:10px; font-weight:700; }
+		.listing h3 { margin:18px 0 8px; font-family:'Space Grotesk',sans-serif; font-size:18px; letter-spacing:-.5px; }
+		.listing p { margin:0; color:#5d6b63; font-size:13px; line-height:1.6; }
+		.listing-foot { display:flex; justify-content:space-between; gap:10px; align-items:center; padding-top:17px; margin-top:18px; border-top:1px solid #edf0eb; }
+		.meta { display:flex; gap:14px; color:var(--muted); font-size:10px; }
+		.listing-foot button { padding:8px 11px; color:var(--forest); background:transparent; border:1px solid var(--line); border-radius:6px; font-size:11px; font-weight:700; }
+		.side-card { padding:20px; margin-bottom:14px; background:var(--card); border:1px solid var(--line); border-radius:13px; }
+		.side-card h3 { margin:0 0 15px; font-family:'Space Grotesk',sans-serif; font-size:15px; }
+		.category { display:flex; justify-content:space-between; padding:11px 0; border-bottom:1px solid #edf0eb; color:#536159; font-size:12px; }
+		.category:last-child { border-bottom:0; }
+		.category b { color:var(--ink); }
+		.category-item { width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 12px; margin:0 0 6px; color:#536159; background:#f7faf4; border:1px solid var(--line); border-radius:8px; font-size:12px; text-align:left; cursor:pointer; transition:all .2s ease; }
+		.category-item:hover { border-color:var(--lime); background:white; transform:translateY(-1px); }
+		.category-item.active { background:#f4f8ed; border-color:var(--lime); box-shadow:inset 0 0 0 1px rgba(199,243,107,.45); }
+		.category-item b { color:var(--ink); }
+		.google-auth { width:100%; margin-top:10px; justify-content:center; background:#f5f9ef; border-color:#dfead8; }
+		.google-mark { display:inline-grid; place-items:center; width:18px; height:18px; margin-right:7px; color:#4285f4; background:white; border-radius:50%; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; }
+		.google-auth:hover { border-color:var(--forest); }
+		.auth-code-panel { display:grid; gap:10px; padding:12px; margin-top:12px; background:#f7faf4; border:1px solid var(--line); border-radius:10px; }
+		.auth-code-panel .qr-box { display:grid; grid-template-columns:88px minmax(0,1fr); gap:12px; align-items:center; }
+		.auth-code-panel img { width:88px; height:88px; border-radius:8px; background:white; border:1px solid var(--line); padding:6px; }
+		.auth-code-panel strong { display:block; margin-top:4px; font-size:12px; letter-spacing:.5px; }
+		.auth-code-panel small { color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+		.auth-code-panel p { margin:0; color:#536159; font-size:11px; line-height:1.5; }
+		#adminDashboardModal .modal { background:linear-gradient(145deg,#f8fbf4,#ffffff); border:1px solid #d9e6d1; }
+		#adminDashboardModal .modal-head { padding-bottom:16px; border-bottom:1px solid var(--line); }
+		#adminDashboardModal .profile-card { background:#ffffff; border-color:#dfe8da; box-shadow:0 12px 28px rgba(24,61,50,.06); }
+		#adminDashboardModal .profile-card h3 { color:var(--forest); }
+		#adminDashboardModal .profile-stat { background:#f7faf4; }
+		#adminDashboardModal .auth-code-panel { padding:16px; background:linear-gradient(145deg,#f1f8e9,#ffffff); border-color:#d6e6c8; }
+		#adminDashboardModal .profile-stats { gap:8px; }
+		.admin-announcement-card { grid-column:1 / -1; }
+		.admin-announcement-item { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; padding:12px; background:#f7faf4; border:1px solid var(--line); border-radius:10px; }
+		.admin-announcement-item strong { display:block; color:var(--forest); font-size:12px; }
+		.admin-announcement-item small { display:block; margin-top:4px; color:var(--muted); font-size:10px; }
+		.admin-announcement-item p { margin:7px 0 0; color:#536159; font-size:11px; line-height:1.45; }
+		.admin-announcement-item button { flex:0 0 auto; color:#a83e29; border-color:#f0c8bd; background:#fff7f4; }
+		.toast-container { position:fixed; top:18px; right:18px; z-index:100; display:flex; flex-direction:column; gap:10px; width:min(340px, calc(100vw - 24px)); pointer-events:none; }
+		.toast { display:flex; align-items:flex-start; gap:12px; padding:12px 14px 12px 12px; border-radius:12px; box-shadow:0 18px 36px rgba(24,61,50,.14); border:1px solid rgba(24,61,50,.08); background:#fff; transform:translateX(20px); opacity:0; transition:all .24s ease; pointer-events:auto; }
+		.toast.visible { opacity:1; transform:translateX(0); }
+		.toast-success { border-color:rgba(131,182,76,.35); background:linear-gradient(135deg,#f5fbeb,#fff); }
+		.site-confirm { display:none; position:fixed; inset:0; z-index:120; place-items:center; padding:20px; background:rgba(12,26,21,.58); }
+		.site-confirm.open { display:grid; }
+		.site-confirm-panel { width:min(100%,390px); padding:24px; background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:0 26px 60px rgba(12,32,24,.24); }
+		.site-confirm-panel h2 { margin:0 0 10px; color:var(--forest); font-family:'Space Grotesk',sans-serif; font-size:20px; }
+		.site-confirm-panel p { margin:0; color:var(--muted); font-size:13px; line-height:1.55; }
+		.site-confirm-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:20px; }
+		.site-confirm-actions button { padding:10px 14px; border-radius:7px; font-size:11px; font-weight:700; }
+		.site-confirm-cancel { color:var(--ink); background:white; border:1px solid var(--line); }
+		.site-confirm-ok { color:var(--forest); background:var(--lime); border:1px solid var(--lime); }
+		.toast-error { border-color:rgba(217,92,72,.28); background:linear-gradient(135deg,#fff4f1,#fff); }
+		.toast-info { border-color:rgba(51,98,71,.18); background:linear-gradient(135deg,#f3f8f3,#fff); }
+		.toast-body { flex:1; min-width:0; }
+		.toast-title { margin-bottom:4px; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+		.toast-message { color:#43534c; font-size:12px; line-height:1.5; word-break:break-word; }
+		.toast-close, .toast-action { border:0; border-radius:8px; font-weight:700; cursor:pointer; }
+		.toast-close { width:28px; height:28px; display:grid; place-items:center; font-size:18px; color:#43534c; background:rgba(24,61,50,.04); }
+		.toast-action { padding:8px 10px; background:var(--lime); color:var(--forest); }
+		.auth-locked { position:relative; cursor:pointer; }
+		.auth-locked .listing-lock { display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:15px; margin-top:15px; border-top:1px solid #edf0eb; color:var(--muted); font-size:11px; }
+		.auth-locked .listing-lock button { padding:8px 11px; color:var(--forest); background:var(--lime); border:1px solid var(--lime); border-radius:6px; font-size:11px; font-weight:700; white-space:nowrap; }
+		.form-message.info { color:var(--forest); background:#f4f8ed; }
+		.package { position:relative; overflow:hidden; padding:20px; color:white; background:var(--forest); border-radius:13px; }
+		.package:before { content:''; position:absolute; width:120px; height:120px; right:-45px; top:-50px; border:1px solid rgba(199,243,107,.5); border-radius:50%; }
+		.package small { color:#b9c8bf; font-size:10px; text-transform:uppercase; letter-spacing:1px; }
+		.package h3 { margin:12px 0 8px; font-family:'Space Grotesk',sans-serif; font-size:22px; }
+		.package p { margin:0 0 15px; color:#d4dfd7; font-size:11px; line-height:1.5; }
+		.package button { width:100%; padding:11px; color:var(--forest); background:var(--lime); border:0; border-radius:6px; font-size:11px; font-weight:700; }
+		.package-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+		.plan { padding:17px; background:#f7f8f5; border:1px solid var(--line); border-radius:10px; }
+		.plan.featured { color:white; background:var(--forest); border-color:var(--forest); }
+		.plan h3 { margin:0 0 8px; font-family:'Space Grotesk',sans-serif; font-size:17px; }
+		.plan-price { margin-bottom:14px; font-family:'Space Grotesk',sans-serif; font-size:25px; font-weight:700; }
+		.plan-price small { color:var(--muted); font-family:'DM Sans',sans-serif; font-size:10px; font-weight:400; }
+		.plan.featured .plan-price small { color:#b9c8bf; }
+		.plan ul { display:grid; gap:8px; min-height:90px; padding:0; margin:0; color:var(--muted); font-size:11px; line-height:1.4; list-style:none; }
+		.plan.featured ul { color:#d4dfd7; }
+		.plan li:before { content:'✓'; margin-right:6px; color:var(--orange); font-weight:700; }
+		.plan button { width:100%; padding:10px; color:var(--forest); background:var(--lime); border:0; border-radius:6px; font-size:11px; font-weight:700; }
+		.plan:not(.featured) button { color:var(--ink); background:white; border:1px solid var(--line); }
+		.empty { display:none; padding:35px; color:var(--muted); background:white; border:1px solid var(--line); border-radius:13px; text-align:center; font-size:13px; }
+		.empty.show { display:block; }
+		footer { display:flex; justify-content:space-between; gap:20px; padding-top:60px; color:var(--muted); font-size:11px; }
+		.modal-backdrop { position:fixed; inset:0; z-index:10; display:none; place-items:center; padding:20px; background:rgba(24,34,29,.55); }
+		.modal-backdrop.open { display:grid; }
+		#profileModal.modal-backdrop { z-index:18; }
+		#publicProfileModal.modal-backdrop { z-index:20; }
+		#modal.modal-backdrop { z-index:30; }
+		.modal { position:relative; width:min(100%,520px); max-height:90vh; overflow:auto; padding:25px; background:var(--card); border-radius:14px; box-shadow:var(--shadow); }
+		#profileModal { padding:0; place-items:stretch; background:rgba(17,25,20,.72); }
+		#profileModal .modal.profile-screen,
+		#profileModal .profile-screen { width:100vw; max-width:none; max-height:none; min-height:100vh; height:100vh; padding:20px clamp(18px,2vw,32px) 28px; border-radius:0; box-shadow:none; background:linear-gradient(180deg,#f2f8ed 0%,#f7faf5 18%,#ffffff 100%); overflow:auto; }
+		#profileModal .profile-screen .profile-grid,
+		#profileModal .profile-screen .profile-posts,
+		#profileModal .profile-screen .profile-column { overflow:visible; }
+		#profileModal .profile-screen .profile-header,
+		#profileModal .profile-screen .profile-card,
+		#profileModal .profile-screen .profile-posts { transform:none; }
+		#modal[data-context="profile"] { background:rgba(17,25,20,.62); }
+		#modal[data-context="profile"] .modal { width:min(100%, 1420px); max-height:94vh; padding:28px 30px 26px; border-radius:18px; }
+		#modal[data-context="profile"] .form-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+		#modal[data-context="profile"] .form-grid > label:nth-last-child(2),
+		#modal[data-context="profile"] .form-grid > label:last-child,
+		#modal[data-context="profile"] .form-grid > div:last-of-type { grid-column:1 / -1; }
+		.profile-screen .modal-head { margin-bottom:25px; }
+		.profile-screen .modal-head h2 { font-size:30px; }
+		.profile-nav { display:flex; align-items:center; gap:8px; margin-left:auto; margin-right:8px; }
+		.profile-nav button { padding:9px 11px; color:var(--ink); background:white; border:1px solid var(--line); border-radius:7px; font-size:11px; font-weight:700; cursor:pointer; }
+		.profile-nav button:hover { border-color:var(--lime); background:#f7faf4; }
+		.profile-header { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:20px; align-items:center; padding:24px 22px 22px; border:1px solid var(--line); border-radius:22px; background:linear-gradient(135deg, rgba(255,255,255,.97), rgba(244,248,237,.96)); box-shadow:0 18px 36px rgba(24,61,50,.08); }
+		.profile-avatar { display:grid; place-items:center; width:72px; height:72px; overflow:hidden; color:var(--forest); background:linear-gradient(135deg,#dff3b0,#c5e893); border:4px solid white; border-radius:18px; box-shadow:0 16px 28px rgba(24,61,50,.12); font-family:'Space Grotesk',sans-serif; font-size:29px; font-weight:700; }
+		.profile-header-copy { min-width:0; }
+		.profile-title-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+		.profile-name { margin:0; font-family:'Space Grotesk',sans-serif; font-size:30px; line-height:1.05; }
+		.profile-meta { display:flex; flex-wrap:wrap; gap:8px; color:var(--muted); font-size:12px; }
+		.profile-meta span { display:inline-flex; align-items:center; padding:7px 10px; border:1px solid rgba(24,61,50,.12); border-radius:999px; background:rgba(255,255,255,.82); color:var(--muted); font-weight:600; box-shadow:inset 0 1px 0 rgba(255,255,255,.6); }
+		.profile-meta span:first-child { color:var(--forest); background:rgba(196,232,147,.35); border-color:rgba(118,153,84,.35); font-weight:800; }
+		#profileRole { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; padding:0; border-radius:50%; vertical-align:middle; }
+		.profile-account-badge { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; padding:0; flex-shrink:0; border-radius:50%; background:#fff; border:1px solid rgba(24,61,50,.12); box-shadow:0 2px 8px rgba(24,61,50,.10); }
+		.profile-account-badge .badge-icon { display:inline-grid; place-items:center; width:14px; height:14px; border-radius:50%; font-size:9px; line-height:1; }
+		.profile-account-badge.santiye { color:var(--forest); background:#fff; }
+		.profile-account-badge.santiye .badge-icon { background:#a9ce5a; color:#fff; }
+		.profile-account-badge.usta { color:#7a5d00; background:#fff; }
+		.profile-account-badge.usta .badge-icon { background:#f1cf48; color:#7a5d00; }
+		.profile-account-badge .collar { font-size:9px; }
+		.profile-screen.profile-layout-santiye { --profile-accent:#183d32; --profile-soft:#eef7ea; }
+		.profile-screen.profile-layout-santiye .profile-header { background:linear-gradient(135deg,#f5f9ef,#edf6ea); border-color:#d9e5d0; box-shadow:0 18px 36px rgba(24,61,50,.08); }
+		.profile-screen.profile-layout-santiye .profile-avatar { background:linear-gradient(135deg,#e8f6d7,#cfe9b7); border-color:#dfe8d7; color:var(--forest); }
+		.profile-screen.profile-layout-santiye .profile-card { background:linear-gradient(145deg,#fbfdf9,#edf6ea); border-color:#d9e5d0; }
+		.profile-screen.profile-layout-usta { --profile-accent:#d8a906; --profile-soft:#fff9dc; }
+		.profile-screen.profile-layout-usta .profile-header { background:linear-gradient(135deg,#fffef9,#fff7d8); border-color:#f5df99; box-shadow:0 18px 36px rgba(154,123,18,.08); }
+		.profile-screen.profile-layout-usta .profile-avatar { background:linear-gradient(135deg,#ffe88a,#f1cf48); border-color:#f1cf48; color:#5d4c00; }
+		.profile-screen.profile-layout-usta .profile-card { background:linear-gradient(145deg,#fffef9,#fff7d8); border-color:#f5df99; }
+		.profile-rating { color:var(--orange) !important; background:rgba(216,169,6,.12) !important; border-color:rgba(216,169,6,.28) !important; }
+		.profile-grid { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(280px,.95fr); gap:18px; margin-top:22px; }
+		.profile-column { display:grid; gap:18px; align-content:start; }
+		.profile-card { padding:20px; background:linear-gradient(145deg,#ffffff,#f8faf6); border:1px solid var(--line); border-radius:16px; box-shadow:0 14px 28px rgba(24,61,50,.06); }
+		.profile-card h3 { margin:0 0 15px; font-family:'Space Grotesk',sans-serif; font-size:16px; }
+		.profile-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+		.profile-stat { padding:13px; background:white; border:1px solid var(--line); border-radius:10px; }
+		.profile-stat strong { display:block; font-family:'Space Grotesk',sans-serif; font-size:22px; }
+		.profile-stat span { color:var(--muted); font-size:10px; }
+		.profile-screen .profile-card:has(#profileForm) { background:linear-gradient(145deg,#f8faf6,#f1f6ed); border-color:#d6e2d2; }
+		.profile-screen .profile-card:has(#profileForm) #profileForm { padding:22px 20px; margin-top:0; background:white; border:1px solid var(--line); border-radius:14px; box-shadow:0 12px 24px rgba(24,61,50,.05); }
+		.profile-screen .profile-card:has(#profileForm) #profileForm label { color:var(--ink); }
+		.profile-screen .profile-card:has(#profileForm) #profileForm input,.profile-screen .profile-card:has(#profileForm) #profileForm select { background:#fbfcfa; }
+		.profile-screen .profile-card:has(#profileForm) #profileForm .primary { width:auto; min-width:170px; margin-left:auto; }
+		.profile-screen .profile-card:has(#profileForm) #profileMessage { margin-top:0; }
+		.profile-screen #profileForm[hidden],.profile-screen #profileMessage[hidden] { display:none !important; }
+		.profile-screen .profile-card:has(#profileForm):has(#profileForm[hidden]) { background:#f8faf6; border-color:var(--line); }
+		.profile-screen .modal-head .ghost { margin-left:auto; margin-right:8px; padding:9px 12px; }
+		.admin-profile-stats { display:none; grid-template-columns:1fr; margin-top:14px; padding:14px 16px; background:linear-gradient(135deg,#183d32,#245b49); border:0; border-radius:14px; color:#f4faef; box-shadow:0 12px 24px rgba(24,61,50,.14); }
+		.admin-profile-stats.visible { display:grid; }
+		.admin-profile-stats small { color:#c7ddcf; font-size:10px; text-transform:uppercase; letter-spacing:.08em; }
+		.admin-profile-stats strong { margin-top:4px; font-family:'Space Grotesk',sans-serif; font-size:28px; line-height:1; }
+		.profile-grid { display:grid; grid-template-columns:1fr; gap:18px; margin-top:22px; }
+		.profile-column { display:grid; gap:18px; align-content:start; }
+		.profile-card { padding:20px; background:#f8faf6; border:1px solid var(--line); border-radius:11px; }
+		.profile-card h3 { margin:0 0 15px; font-family:'Space Grotesk',sans-serif; font-size:16px; }
+		.profile-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+		.profile-stat { padding:13px; background:white; border:1px solid var(--line); border-radius:8px; }
+		.profile-stat strong { display:block; font-family:'Space Grotesk',sans-serif; font-size:22px; }
+		.profile-rating { color:var(--orange); font-size:11px !important; letter-spacing:0; }
+		.profile-stat span { color:var(--muted); font-size:10px; }
+		.profile-list { display:grid; gap:12px; }
+		.profile-job { display:grid; gap:8px; padding:12px 12px 10px; background:#ffffff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 18px rgba(24,61,50,.04); }
+		.profile-job strong,.profile-comment strong { display:block; margin-bottom:2px; font-size:12px; }
+		.profile-job small,.profile-comment small { color:var(--muted); font-size:10px; }
+		.profile-job p,.profile-comment p { margin:4px 0 0; color:#5d6b63; font-size:11px; line-height:1.45; }
+		.profile-job .post-card-image { margin-bottom:2px; }
+		.profile-job-meta { display:flex; flex-wrap:wrap; gap:6px; }
+		.profile-job-meta span { display:inline-flex; align-items:center; padding:5px 7px; background:#f7faf4; border:1px solid var(--line); border-radius:999px; color:var(--muted); font-size:9px; font-weight:700; }
+		#profileWorkExperiences:empty,
+		#profileReviews:empty,
+		#profileListings:empty { display:none; }
+		#workExperienceFormWrapper { display:block; padding:18px; background:linear-gradient(145deg,#ffffff,#f7faf4); border:1px solid var(--line); border-radius:18px; box-shadow:0 14px 28px rgba(24,61,50,.06); }
+		#workExperienceFormWrapper[hidden] { display:none !important; }
+		#workExperienceForm { display:grid; gap:12px; }
+		#workExperienceForm .primary { width:auto; min-width:170px; margin-left:auto; }
+		#workExperienceForm .ghost { width:auto; }
+		.profile-screen .form-grid { max-width:720px; margin-top:20px; }
+		.profile-screen .profile-card:has(#profileForm) { background:linear-gradient(145deg,#f8faf6,#f1f6ed); border-color:#d6e2d2; }
+		.profile-screen .profile-card:has(#profileForm) #profileForm { padding:18px; margin-top:0; background:white; border:1px solid var(--line); border-radius:10px; box-shadow:0 10px 25px rgba(24,61,50,.05); }
+		.profile-screen .profile-card:has(#profileForm) #profileForm label { color:var(--ink); }
+		.profile-screen .profile-card:has(#profileForm) #profileForm input,.profile-screen .profile-card:has(#profileForm) #profileForm select { background:#fbfcfa; }
+		.profile-screen .profile-card:has(#profileForm) #profileForm .primary { width:auto; min-width:170px; margin-left:auto; }
+		.profile-screen .profile-card:has(#profileForm) #profileMessage { margin-top:0; }
+		.profile-screen #profileForm[hidden],.profile-screen #profileMessage[hidden] { display:none !important; }
+		.profile-screen .profile-card:has(#profileForm):has(#profileForm[hidden]) { background:#f8faf6; border-color:var(--line); }
+		.profile-screen .modal-head .ghost { margin-left:auto; margin-right:8px; padding:9px 12px; }
+		.modal-head { position:relative; display:flex; justify-content:space-between; align-items:center; padding-right:48px; margin-bottom:20px; }
+		.modal h2 { margin:0; font-family:'Space Grotesk',sans-serif; font-size:23px; }
+		.close { display:grid; place-items:center; width:34px; height:34px; color:#eaf4ed; background:rgba(24,61,50,.88); border:1px solid rgba(255,255,255,.24); border-radius:10px; font-size:20px; line-height:1; transition:background .2s,color .2s,transform .2s; }
+		.modal-head .close { position:absolute; top:50%; right:0; transform:translateY(-50%); }
+		.close:hover { color:white; background:var(--orange); transform:rotate(90deg); }
+		.modal-head .close:hover { transform:translateY(-50%) rotate(90deg); }
+		.form-grid { display:grid; gap:12px; }
+		.form-grid label { display:grid; gap:6px; color:var(--muted); font-size:11px; font-weight:600; }
+		.form-grid input,.form-grid select,.form-grid textarea { width:100%; padding:11px; color:var(--ink); background:#f7f8f5; border:1px solid var(--line); border-radius:7px; outline:0; resize:vertical; }
+		.form-grid textarea { min-height:100px; }
+		.modal .primary { width:100%; margin-top:15px; }
+		.payment-summary { display:flex; justify-content:space-between; padding:13px; margin-bottom:16px; color:var(--forest); background:#f4f8ed; border:1px solid var(--line); border-radius:8px; font-size:12px; font-weight:700; }
+		.payment-note { margin:12px 0 0; color:var(--muted); font-size:10px; line-height:1.5; text-align:center; }
+		.paytr-frame { width:100%; min-height:520px; margin-top:15px; border:0; }
+		.donation { position:relative; overflow:hidden; padding:20px; color:var(--ink); background:linear-gradient(145deg,#f7fbe9,#fff); border:1px solid #dce8bd; border-radius:13px; }
+		.donation:after { content:'♡'; position:absolute; right:18px; top:8px; color:#dce99b; font-size:62px; line-height:1; transform:rotate(12deg); }
+		.donation small { color:var(--orange); font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+		.donation h3 { position:relative; z-index:1; margin:12px 0 8px; font-family:'Space Grotesk',sans-serif; font-size:21px; }
+		.donation p { position:relative; z-index:1; margin:0 0 15px; max-width:220px; color:#5d6b63; font-size:11px; line-height:1.55; }
+		.donation button { position:relative; z-index:1; width:100%; padding:11px; color:var(--forest); background:var(--lime); border:0; border-radius:7px; font-size:11px; font-weight:700; }
+		.donation-modal { width:min(100%,460px); }
+		.donation-popover { width:min( calc(100vw - 28px), 390px); }
+		.donation-popover .primary { width:100%; margin-top:0; }
+		.iban-box { padding:18px; margin:10px 0 16px; color:var(--forest); background:#f4f8ed; border:1px solid #dce8bd; border-radius:10px; text-align:center; }
+		.iban-box strong { display:block; margin:8px 0; font-family:'Space Grotesk',sans-serif; font-size:18px; letter-spacing:1px; }
+		.iban-box span { color:var(--muted); font-size:12px; }
+		.donation-intro { margin:10px 0 16px; color:#5d6b63; font-size:12px; line-height:1.65; }
+		.donation-name { padding:12px 14px; margin-top:10px; border:1px solid var(--line); border-radius:8px; background:#f7faf4; }
+		.donation-name span { display:block; margin-bottom:4px; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.8px; }
+		.donation-name strong { color:var(--ink); font-size:14px; }
+		.bank-logos { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:8px; margin-top:18px; }
+		.bank-logo { display:flex; align-items:center; justify-content:center; min-height:40px; padding:6px 8px; color:var(--forest); background:white; border:1px solid var(--line); border-radius:8px; text-decoration:none; font-size:10px; font-weight:700; text-align:center; }
+		.bank-logo:hover { border-color:var(--lime); box-shadow:0 10px 20px rgba(24,61,50,.08); }
+		.verification-message { margin:0 0 17px; color:var(--muted); font-size:12px; line-height:1.5; }
+		.reset-step[hidden] { display:none; }
+		.reset-code-note { margin:0 0 14px; color:var(--muted); font-size:11px; line-height:1.5; }
+		.password-wrap { position:relative; }
+		.password-wrap input { padding-right:68px; }
+		.password-toggle { position:absolute; right:8px; top:50%; padding:4px 6px; color:var(--forest); background:transparent; border:0; font-size:10px; font-weight:700; transform:translateY(-50%); }
+		.form-message { display:none; padding:10px 12px; margin:0; border-radius:7px; font-size:11px; line-height:1.4; }
+		.form-message.show { display:block; }
+		.form-message.error { color:#a83e29; background:#fff1ed; }
+		.form-message.success { color:var(--forest); background:#f4f8ed; }
+		.chat-modal { width:min(100%,560px); padding:0; overflow:hidden; }
+		.chat-head { display:flex; align-items:center; gap:12px; padding:20px 22px; color:white; background:var(--forest); }
+		.chat-head .avatar { flex:0 0 auto; color:var(--forest); background:var(--lime); }
+		.chat-head strong { display:block; font-family:'Space Grotesk',sans-serif; font-size:16px; }
+		.chat-head small { display:block; margin-top:4px; color:#c8d4cc; font-size:11px; }
+		.chat-head .close { margin-left:auto; color:#d9e6dd; background:rgba(255,255,255,.12); }
+		.chat-head .close:hover { color:white; background:var(--orange); transform:rotate(90deg); }
+		.chat-body { display:grid; grid-auto-rows:max-content; align-content:start; gap:8px; min-height:270px; max-height:360px; padding:18px; overflow:auto; background:#f4f7f1; }
+		.chat-message { align-self:start; width:fit-content; max-width:78%; padding:10px 12px; border-radius:10px; color:#425149; background:white; border:1px solid var(--line); font-size:12px; line-height:1.45; }
+		.chat-message.sent { justify-self:end; color:var(--forest); background:var(--lime); border-color:var(--lime); }
+		.chat-message small { display:block; margin-top:5px; color:var(--muted); font-size:9px; }
+		.chat-compose { display:flex; gap:8px; padding:14px 18px 18px; background:white; border-top:1px solid var(--line); }
+		.chat-compose input { flex:1; min-width:0; padding:11px 12px; color:var(--ink); background:#f7f8f5; border:1px solid var(--line); border-radius:7px; outline:0; font-size:12px; }
+		.chat-compose input:focus { border-color:var(--lime); }
+		.chat-compose button { padding:0 16px; color:var(--forest); background:var(--lime); border:0; border-radius:7px; font-size:11px; font-weight:700; }
+		.chat-compose.matrix-dismiss { overflow:hidden; pointer-events:none; animation:matrix-drop-away .8s steps(9,end) forwards; }
+		@keyframes matrix-drop-away { 0% { opacity:1; transform:translateY(0); filter:none; } 55% { opacity:.72; transform:translateY(24px); filter:blur(.4px); } 100% { max-height:0; padding-top:0; padding-bottom:0; gap:0; opacity:0; transform:translateY(72px); border-top-color:transparent; filter:blur(2px); } }
+		.header-popover { --tip-offset: 24px; position:fixed; z-index:20; display:none; width:min( calc(100vw - 28px), 420px); padding:18px; background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:0 18px 45px rgba(24,61,50,.18); }
+		.header-popover.open { display:block; }
+		.header-popover:before { content:''; position:absolute; top:-7px; left:var(--tip-offset); width:12px; height:12px; background:var(--card); border-top:1px solid var(--line); border-left:1px solid var(--line); transform:rotate(45deg); }
+		.header-popover h2 { margin:0; font-family:'Space Grotesk',sans-serif; font-size:19px; }
+		.donation-page { display:none; position:fixed; inset:0; z-index:30; background:rgba(12,26,21,.52); padding:18px; }
+		.donation-page.open { display:flex; }
+		.donation-layout { position:relative; width:min(100%, 1200px); min-height:86vh; margin:auto; background:#f5f7f2; border:1px solid rgba(255,255,255,.16); border-radius:24px; box-shadow:0 28px 64px rgba(9,18,15,.35); overflow:hidden; }
+		.donation-topbar { position:absolute; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 18px; background:linear-gradient(180deg,#183d32 0%,#12372d 100%); border-bottom:1px solid rgba(255,255,255,.12); z-index:2; }
+		.donation-topbar-left { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+		.donation-home { background:#f3f9da; color:var(--forest); border:1px solid rgba(24,61,50,.18); border-radius:999px; padding:10px 16px; font-size:12px; font-weight:700; box-shadow:inset 0 1px 0 rgba(255,255,255,.6); }
+		.donation-utility-pill { display:inline-flex; align-items:center; gap:8px; padding:9px 12px; color:#edf7ef; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:999px; font-size:11px; font-weight:700; letter-spacing:.02em; }
+		.donation-utility-pill .icon { display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; background:rgba(199,243,107,.18); color:#dff7ab; font-size:11px; }
+		.donation-close { position:static; background:rgba(255,255,255,.12); color:#eaf4ed; border:1px solid rgba(255,255,255,.18); }
+		.donation-content { padding:86px 22px 22px; overflow:auto; }
+		.donation-card { max-width:760px; margin:0 auto; background:linear-gradient(180deg,#ffffff 0%,#f7faf4 100%); border:1px solid #dfe6d5; border-radius:18px; padding:28px 28px 20px; box-shadow:0 18px 36px rgba(24,61,50,.08); }
+		.donation-card h1 { margin:0 0 16px; font-family:'Space Grotesk',sans-serif; font-size:32px; color:var(--forest); letter-spacing:0.04em; }
+		.donation-card .donation-intro { margin:0 0 18px; color:#46564f; font-size:14px; line-height:1.9; letter-spacing:0.02em; }
+		.donation-card .donation-intro strong { color:var(--forest); }
+		.donation-accounts { display:grid; gap:12px; margin:18px 0 22px; }
+		.account-row { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 14px; background:linear-gradient(180deg,#f8fbe9 0%,#f1f7e7 100%); border:1px solid #dce8bd; border-radius:10px; }
+		.account-row strong { color:var(--forest); font-size:15px; letter-spacing:.5px; }
+		.account-row span { color:var(--muted); font-size:11px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; }
+		.donation-name { padding:14px 16px; margin-top:10px; border:1px solid #dfe6d5; border-radius:12px; background:linear-gradient(180deg,#f7faf4 0%,#eef7eb 100%); }
+		.donation-name span { display:block; margin-bottom:6px; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.8px; }
+		.donation-name strong { font-size:18px; color:var(--ink); }
+		.donation-card p { margin:0; }
+		.messages-modal { width:min( calc(100vw - 28px), 560px); }
+		.message-list { display:grid; gap:8px; max-height:430px; overflow:auto; }
+		.message-thread { display:grid; grid-template-columns:auto minmax(0,1fr) auto auto; gap:11px; align-items:center; width:100%; padding:12px; color:var(--ink); background:#f7faf4; border:1px solid var(--line); border-radius:9px; text-align:left; }
+		.message-thread:hover { border-color:var(--lime); background:white; }
+		.message-thread .avatar { width:38px; height:38px; }
+		.message-thread-open { min-width:0; padding:0; color:var(--ink); background:transparent; border:0; text-align:left; cursor:pointer; }
+		.message-thread strong,.message-thread small { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+		.message-thread small { max-width:290px; margin-top:4px; color:var(--muted); font-size:10px; }
+		.message-thread time { color:var(--muted); font-size:9px; }
+		.message-thread-delete { padding:6px 8px; color:#9a4a35; background:transparent; border:0; border-radius:6px; font-size:10px; cursor:pointer; }
+		.message-thread-delete:hover { background:#fff0eb; }
+		.empty-messages { padding:30px 12px; color:var(--muted); text-align:center; font-size:12px; }
+		.notification-item { display:block; width:100%; padding:12px; margin-top:10px; color:var(--ink); background:#f7faf4; border:1px solid var(--line); border-radius:8px; font-size:12px; line-height:1.4; text-align:left; cursor:pointer; }
+		.notification-item small { display:block; margin-top:5px; color:var(--muted); font-size:9px; }
+		.public-profile-modal { width:min(100%, 1200px); max-width:calc(100vw - 22px); min-height:calc(100vh - 32px); padding:0; overflow:hidden; border-radius:18px; }
+		#publicProfileModal .modal.public-profile-modal { width:min(100%, 1200px); max-height:calc(100vh - 32px); }
+		.public-profile-hero { position:relative; display:flex; align-items:center; gap:14px; padding:58px 24px 24px; color:white; background:var(--forest); }
+		.public-profile-hero .avatar { flex:0 0 auto; width:58px; height:58px; color:var(--forest); background:var(--lime); }
+		.public-profile-hero h2 { margin:0 0 5px; font-family:'Space Grotesk',sans-serif; font-size:21px; }
+		.public-profile-hero p { margin:0; color:#c8d4cc; font-size:11px; }
+		.public-profile-hero .close { position:absolute; top:17px; right:18px; display:grid; place-items:center; width:34px; height:34px; color:#eaf4ed; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.24); border-radius:10px; font-size:20px; line-height:1; transition:background .2s,transform .2s; }
+		.public-profile-hero .close:hover { background:var(--orange); transform:rotate(90deg); }
+		.public-profile-body { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:20px; }
+		.public-profile-item { padding:13px; background:#f7faf4; border:1px solid var(--line); border-radius:8px; }
+		.public-profile-item small { display:block; margin-bottom:6px; color:var(--muted); font-size:10px; }
+		.public-profile-item strong { display:block; color:var(--ink); font-size:12px; }
+		.public-profile-actions { padding:0 20px 20px; }
+		.public-profile-actions button { width:100%; padding:11px; color:var(--forest); background:var(--lime); border:0; border-radius:7px; font-size:11px; font-weight:700; }
+		.profile-posts { display:grid; grid-template-columns:minmax(260px,0.9fr) minmax(0,1.5fr); gap:18px; padding:0 20px 22px; }
+		.profile-posts-main,.profile-reviews,.profile-listings { min-width:0; }
+		.profile-posts-main { display:grid; gap:12px; }
+		.profile-reviews { padding:14px 16px; background:linear-gradient(180deg,#ffffff,#f8faf6); border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 24px rgba(24,61,50,.04); }
+		.profile-listings { display:grid; gap:10px; padding:14px 16px; background:linear-gradient(180deg,#ffffff,#f8faf6); border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 24px rgba(24,61,50,.04); }
+		.profile-listings-left { order:0; }
+		.profile-listing { padding:10px 0; border-bottom:1px solid var(--line); }
+		.profile-listing:last-child { border-bottom:0; }
+		.profile-listing strong { display:block; color:var(--ink); font-size:12px; }
+		.profile-listing small { display:block; margin-top:5px; color:var(--muted); font-size:10px; }
+		.profile-listing p { margin:7px 0; color:#5d6b63; font-size:11px; line-height:1.45; }
+		.profile-listing-actions { display:flex; gap:8px; margin-top:9px; }
+		.profile-listing button { flex:1; padding:9px; color:var(--forest); background:var(--lime); border:0; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; }
+		.profile-listing button[data-delete-listing] { color:#a83e29; background:#fff1ed; }
+		.profile-posts-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+		.profile-posts-head h3 { margin:0; font-family:'Space Grotesk',sans-serif; font-size:17px; }
+		.profile-listings-toolbar { display:flex; justify-content:flex-end; margin-bottom:12px; }
+		.profile-add-listing-button {
+			display:flex; align-items:center; justify-content:center; gap:10px;
+			width:100%; min-height:54px; padding:10px 14px;
+			color:var(--forest); background:linear-gradient(135deg,#ebf8bf,#d9f2aa);
+			border:1px solid rgba(24,61,50,.08); border-radius:16px;
+			font-size:13px; font-weight:800; letter-spacing:.2px; line-height:1; cursor:pointer;
+			box-shadow:0 12px 24px rgba(104,140,52,.18), inset 0 1px 0 rgba(255,255,255,.7);
+		}
+		.profile-add-listing-button .work-icon { display:inline-grid; place-items:center; width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,.55); font-size:14px; box-shadow:inset 0 1px 0 rgba(255,255,255,.7); }
+		.profile-add-listing-button:hover { transform:translateY(-1px); box-shadow:0 16px 28px rgba(104,140,52,.22), inset 0 1px 0 rgba(255,255,255,.7); }
+		.profile-listings-divider { height:1px; margin:18px 0 14px; background:linear-gradient(90deg, rgba(24,61,50,.22), rgba(24,61,50,.10), rgba(24,61,50,.22)); }
+		.profile-job-card { position:relative; }
+		.profile-job-card .delete-work-button {
+			position:absolute; top:8px; right:8px; display:grid; place-items:center;
+			width:28px; height:28px; padding:0; border:0; border-radius:9px;
+			background:rgba(168,62,41,.08); color:#a63e29; cursor:pointer;
+			font-size:15px; box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+		}
+		.profile-job-card .delete-work-button:hover { background:rgba(168,62,41,.14); }
+		.post-compose { padding:14px; margin-bottom:16px; background:#f7faf4; border:1px solid var(--line); border-radius:10px; }
+		.post-compose textarea { width:100%; min-height:80px; padding:11px; resize:vertical; color:var(--ink); background:white; border:1px solid var(--line); border-radius:7px; outline:0; font-size:12px; }
+		.post-compose-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:10px; }
+		.post-image-label { padding:8px 10px; color:var(--forest); background:white; border:1px solid var(--line); border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; }
+		.post-image-label input { display:none; }
+		.post-card { padding:15px; margin-bottom:12px; background:white; border:1px solid var(--line); border-radius:10px; }
+		.post-comments { margin-top:12px; padding-top:11px; border-top:1px solid var(--line); }
+		.comments-title { display:block; margin-bottom:10px; color:var(--ink); font-family:'Space Grotesk',sans-serif; font-size:12px; }
+		.post-edit-actions { display:flex; gap:6px; margin-left:auto; }
+		.post-edit-actions button,.comment-edit-actions button,.review-actions button { padding:5px 7px; color:var(--muted); background:white; border:1px solid var(--line); border-radius:5px; font-size:10px; cursor:pointer; }
+		.review-card { padding:11px 0; border-bottom:1px solid var(--line); }
+		.review-card:last-child { border-bottom:0; }
+		.review-stars { color:var(--orange); letter-spacing:1px; }
+		.review-card p { margin:6px 0; color:#5d6b63; font-size:11px; line-height:1.5; }
+		.review-form { display:grid; gap:8px; margin-top:14px; }
+		.review-form select,.review-form textarea { width:100%; padding:8px; border:1px solid var(--line); border-radius:6px; font-size:11px; }
+		.comment-edit-actions { display:inline-flex; gap:5px; margin-left:6px; }
+		.post-card-head { display:flex; align-items:center; gap:10px; }
+		.post-card-head strong { display:block; color:var(--ink); font-size:12px; cursor:pointer; }
+		.post-card-head strong:hover { color:var(--orange); }
+		.post-card-head small { display:block; margin-top:3px; color:var(--muted); font-size:10px; }
+		.post-card p { margin:13px 0; color:#526158; font-size:12px; line-height:1.6; white-space:pre-wrap; }
+		.post-card-image { display:block; width:100%; max-height:360px; object-fit:cover; border-radius:8px; }
+		.post-actions { display:flex; align-items:center; gap:10px; padding-top:11px; border-top:1px solid #edf0eb; }
+		.like-button { display:inline-flex; align-items:center; gap:7px; padding:7px 10px; color:#63736a; background:#f6f8f4; border:1px solid var(--line); border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; }
+		.like-button .like-icon { display:grid; place-items:center; width:19px; height:19px; color:#7b8d82; background:white; border-radius:50%; font-size:13px; transition:transform .2s,color .2s; }
+		.like-button:hover .like-icon { transform:rotate(-12deg) scale(1.15); color:#ed5d71; }
+		.like-button.liked { color:#d84b67; border-color:#f3b7c2; background:#fff4f6; }
+		.like-button.liked .like-icon { color:#ed4f6a; }
+		.comment-list { display:grid; gap:7px; margin-top:11px; }
+		.comment-item { padding:8px 10px; background:#f7faf4; border-radius:7px; color:#526158; font-size:11px; line-height:1.45; }
+		.comment-item strong { color:var(--ink); cursor:pointer; }
+		.comment-form { display:flex; gap:7px; margin-top:10px; }
+		.comment-form input { flex:1; min-width:0; padding:8px 10px; border:1px solid var(--line); border-radius:6px; font-size:11px; }
+		.comment-form button { padding:8px 10px; color:var(--forest); background:var(--lime); border:0; border-radius:6px; font-size:11px; font-weight:700; }
+		@media (max-width:850px) { .shell{padding:0 18px 45px} header{height:72px} nav{display:none} .hero{display:block;padding:52px 0 35px;min-height:0} .hero-note{max-width:390px;margin-top:35px} .listing-layout{grid-template-columns:1fr} .rightbar{display:grid;grid-template-columns:1fr 1fr;gap:10px}.package{grid-column:span 2} }
+		@media (max-width:520px) { body{overflow-x:hidden} .shell{width:100%;padding:0 12px 36px} header{position:relative;display:flex;flex-wrap:wrap;align-items:center;height:auto;min-height:64px;padding:10px 0;gap:8px;overflow:visible} .logo{flex:0 0 auto;width:max-content;min-width:0;max-width:calc(100% - 92px);padding-right:4px;font-size:17px;white-space:nowrap} .header-actions{display:flex;flex:1 1 100%;width:100%;min-width:0;order:3;gap:6px;overflow-x:auto;padding:2px 10px 6px 0;scrollbar-width:none;box-sizing:border-box} .header-actions::-webkit-scrollbar{display:none} .auth-actions,.user-actions{display:flex;flex:0 0 auto;gap:6px;align-items:center} .header-actions > .primary{position:absolute;top:10px;right:0;z-index:2;display:inline-flex;flex:0 0 auto;width:82px;min-height:44px;padding:7px 8px;align-items:center;justify-content:center;text-align:center;line-height:1.15;white-space:normal;font-size:10px} .header-actions button,.header-actions a{flex:0 0 auto;white-space:nowrap;padding:8px 10px;font-size:10px} .header-actions .ghost{display:inline-flex} nav{display:none} h1{max-width:100%;font-size:clamp(38px,11vw,48px);letter-spacing:-2px;overflow-wrap:break-word} .hero{padding:38px 0 28px} .hero-copy{font-size:13px} .hero-note{width:100%;padding:20px} .section-head{display:block}.section-head p{margin-top:7px}.rightbar{display:block}.filterbar{display:grid;grid-template-columns:1fr;gap:7px;padding:8px}.filterbar input,.filterbar select{width:100%;min-width:0}.meta{gap:7px}.listing-foot{align-items:flex-end;flex-wrap:wrap}.listing-foot button{white-space:nowrap} .listing{padding:16px}.announcement-rail{margin-right:-2px}.announcement-item{min-width:min(260px,calc(100vw - 48px))} .donation-page{align-items:flex-start;padding:8px;overflow:hidden} .donation-layout{width:100%;height:calc(100vh - 16px);min-height:0;border-radius:16px} .donation-content{height:100%;box-sizing:border-box;padding:78px 12px 18px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch} .donation-card{padding:20px 14px 16px;border-radius:14px}.donation-card h1{font-size:26px}.donation-card .donation-intro{font-size:13px;line-height:1.7}.account-row{display:block}.account-row strong{display:block;word-break:break-word;font-size:13px}.account-row span{display:block;margin-top:5px} footer{display:block;line-height:2} }
+			@media (max-width:700px) { .package-grid { grid-template-columns:1fr; } .plan ul { min-height:0; } }
+		@media (max-width:700px) { #profileModal .profile-screen { width:100%; min-width:0; padding:12px 12px 24px; } .profile-screen .modal-head { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:16px; min-width:0; } .profile-screen .modal-head h2 { flex:1 1 100%; min-width:0; margin:0; font-size:26px; line-height:1.1; overflow-wrap:anywhere; } .profile-screen .modal-head > .close { position:absolute; top:8px; right:8px; z-index:2; } .profile-nav { order:3; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); flex:1 1 100%; width:100%; min-width:0; margin:0; gap:6px; padding:2px 0 4px; box-sizing:border-box; overflow:visible; } .profile-nav button { min-width:0; width:100%; padding:8px 5px; white-space:normal; line-height:1.15; } .profile-screen .modal-head > .ghost { width:100%; margin:0; } .profile-header { grid-template-columns:72px minmax(0,1fr); gap:12px; min-width:0; padding:18px 14px; } .profile-header-copy { min-width:0; } .profile-name { font-size:25px; overflow-wrap:anywhere; } .profile-meta { min-width:0; } .profile-meta span { max-width:100%; overflow-wrap:anywhere; } .profile-grid { grid-template-columns:1fr; min-width:0; } .profile-stats { grid-template-columns:1fr 1fr 1fr; } .profile-summary { grid-template-columns:1fr 1fr; } .profile-posts { display:block; min-width:0; } .profile-reviews { margin-top:18px; } }
+		@media (max-width:700px) {
+			#profileModal .profile-screen { padding:14px 12px 28px; background:linear-gradient(180deg,#f1f7ed 0%,#f8faf6 38%,#ffffff 100%); }
+			.profile-screen .modal-head { position:relative; display:grid; grid-template-columns:1fr auto; gap:12px; align-items:start; margin-bottom:14px; padding:4px 48px 0 2px; }
+			.profile-screen .modal-head h2 { grid-column:1 / -1; margin:0; color:var(--forest); font-size:28px; letter-spacing:-.6px; }
+			.profile-screen .modal-head > .close { top:0; right:0; width:40px; height:40px; border-radius:12px; }
+			.profile-screen .modal-head > .ghost { grid-column:1 / -1; width:100%; min-height:42px; margin:0; color:var(--forest); background:rgba(255,255,255,.78); border-color:#d7e4d1; border-radius:12px; font-size:12px; }
+			.profile-nav { grid-column:1 / -1; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; width:100%; margin:0; padding:0; }
+			.profile-nav button { min-height:44px; padding:9px 6px; color:#3d5148; background:rgba(255,255,255,.9); border-color:#d9e4db; border-radius:12px; box-shadow:0 4px 12px rgba(24,61,50,.04); font-size:11px; }
+			.profile-header { grid-template-columns:64px minmax(0,1fr); gap:12px; padding:16px; border-radius:18px; box-shadow:0 10px 22px rgba(24,61,50,.07); }
+			.profile-avatar { width:64px; height:64px; border-width:3px; border-radius:16px; font-size:24px; }
+			.profile-title-row { gap:7px; margin-bottom:8px; align-items:flex-start; }
+			.profile-name { font-size:23px; line-height:1.08; }
+			.profile-meta { display:grid; grid-template-columns:1fr; gap:6px; font-size:11px; }
+			.profile-meta span { width:fit-content; max-width:100%; padding:6px 9px; }
+			.profile-grid { display:block; margin-top:14px; }
+			.profile-grid > .profile-column > .profile-card:has(#profileForm[hidden]) { display:none; }
+			.profile-posts { display:flex; flex-direction:column; gap:12px; padding:0; }
+			.profile-listings { padding:16px; border-radius:16px; box-shadow:0 8px 18px rgba(24,61,50,.05); }
+			.profile-posts-main { display:flex; flex-direction:column; gap:10px; }
+			.profile-posts-head { margin-bottom:6px; }
+			.profile-posts-head h3 { font-size:18px; }
+			.profile-add-listing-button { min-height:50px; border-radius:14px; }
+			#profileWorkExperiences:empty, #profileReviews:empty, #profileListings:empty { display:none; }
+		}
+	</style>
+</head>
+<body>
+	<div class="topbar"></div>
+	<div class="shell">
+		<header>
+			<a class="logo" href="#"><span class="logo-mark">⌂</span>USTAŞANTİYE</a>
+			<nav><a class="active" href="#akış">İlan akışı</a><a href="#destek">Destek</a><a href="#profil" class="auth-only" data-open-profile hidden>Profil</a></nav>
+			<div class="header-actions"><div class="auth-actions" id="authActions"><button class="ghost" id="loginButton">Giriş yap</button><button class="ghost" data-open-register>Kaydol</button><button class="ghost" type="button" data-donation-open>Bağış yap</button></div><div class="user-actions" id="userActions" hidden><button class="icon-action" id="notificationsButton"><span class="notification-dot"></span>Bildirimler</button><button class="icon-action" id="messagesButton"><span class="notification-dot"></span>Mesajlar</button><button class="icon-action" id="profileButton">Profil</button><button class="icon-action" id="adminButton" type="button" hidden>Admin</button><button class="icon-action" type="button" data-donation-open>Bağış yap</button><button class="icon-action" id="logoutButton" type="button">Çıkış yap</button></div><button class="primary" data-open-modal>İlan ver +</button></div>
+		</header>
+
+			<section class="hero">
+				<div><div class="eyebrow"><i></i> Şantiyenin yeni buluşma noktası</div><h1>İşin ustasını,<br><em>ustanın işini</em> bul.</h1><p class="hero-copy">Kalıpçıdan konteyner üreticisine, makine operatöründen yemek firmasına kadar şantiyenin ihtiyacı olan herkes aynı yerde.</p></div>
+				<aside class="hero-note"><small>Bugün USTAŞANTİYE'de</small><strong>Doğru ekip,<br>doğru zamanda.</strong><span><b data-total-listings>0 aktif ilan</b><b>81 ilde</b></span></aside>
+			</section>
+
+			<section class="side-card support-banner" aria-labelledby="supportBannerTitle">
+				<div class="support-banner-copy"><h2 id="supportBannerTitle">🚀 Sitemizi Yaşatmaya Yardım Et!</h2><p><span>İçeriklerimiz tamamen ücretsizdir. Sunucu ve geliştirme masraflarımıza destek olmak isterseniz katkıda bulunabilirsiniz.</span><button class="support-banner-button" type="button" data-donation-open>❤️ Bağış Yap</button></p></div>
+			</section>
+
+			<section id="announcements" class="side-card" style="margin-top:0; margin-bottom:12px;">
+				<div class="section-head" style="margin:0 0 12px;">
+					<div><h2>Duyurular</h2><p>Topluluk ve sistem güncellemeleri</p></div>
+				</div>
+				<div id="announcementList"></div>
+			</section>
+
+				<div class="filterbar"><input id="search" placeholder="İlan, usta veya firma ara..." /><select id="roleFilter" aria-label="İlan türü"><option value="all">Tüm ilanlar</option><option value="santiye">Şantiye ilanları</option><option value="usta">Usta ilanları</option></select><select id="distanceFilter"><option value="all">Tüm mesafeler</option><option value="25">25 km içinde</option><option value="50">50 km içinde</option><option value="100">100 km içinde</option></select><select id="categoryFilter"><option value="all">Tüm kategoriler</option><option value="kalıp">Kalıp &amp; beton</option><option value="demir">Demir işleri</option><option value="hafriyat">Hafriyat</option><option value="makine">İş makineleri &amp; operatör</option><option value="elektrik">Elektrik</option><option value="tesisat">Sıhhi tesisat</option><option value="su">Su &amp; kanalizasyon</option><option value="dogalgaz">Doğalgaz</option><option value="boya">Boya &amp; badana</option><option value="siva">Sıva &amp; alçı</option><option value="duvar">Duvar &amp; tuğla</option><option value="seramik">Seramik &amp; mermer</option><option value="yalitim">Yalıtım</option><option value="cati">Çatı işleri</option><option value="kaynak">Kaynak işleri</option><option value="marangoz">Marangoz &amp; ahşap</option><option value="peyzaj">Peyzaj</option><option value="nakliye">Nakliye &amp; lojistik</option><option value="konteyner">Konteyner</option><option value="yemek">Yemek &amp; catering</option><option value="isguvenligi">İş güvenliği</option><option value="temizlik">Şantiye temizliği</option><option value="guvenlik">Güvenlik</option><option value="malzeme">Yapı malzemeleri</option></select></div>
+				<div class="listing-layout"><div><div class="feed" id="feed"></div><div class="empty" id="empty">Bu filtrelere uygun ilan bulunamadı.<br><small>Arama kriterlerini değiştirerek tekrar deneyebilirsin.</small></div></div>
+					<aside class="rightbar"><div class="side-card" id="kategoriler"><h3>Popüler kategoriler</h3><button class="category-item" type="button" data-category="kalıp"><span>🧱 Kalıp &amp; beton</span><b>0</b></button><button class="category-item" type="button" data-category="demir"><span>▦ Demir işleri</span><b>0</b></button><button class="category-item" type="button" data-category="makine"><span>⚙ Makine &amp; hafriyat</span><b>0</b></button><button class="category-item" type="button" data-category="elektrik"><span>⚡ Elektrik &amp; tesisat</span><b>0</b></button><button class="category-item" type="button" data-category="yemek"><span>🍲 Yemek &amp; catering</span><b>0</b></button><button class="category-item" type="button" data-category="konteyner"><span>▣ Konteyner</span><b>0</b></button><button class="category-item" type="button" data-category="nakliye"><span>🚚 Nakliye &amp; lojistik</span><b>0</b></button><button class="category-item" type="button" data-category="isguvenligi"><span>▤ İş güvenliği</span><b>0</b></button><button class="category-item" type="button" data-category="yalitim"><span>◈ Yalıtım &amp; çatı</span><b>0</b></button><button class="category-item" type="button" data-category="temizlik"><span>♙ Temizlik &amp; güvenlik</span><b>0</b></button></div>
+						<div class="donation" id="destek"><small>USTAŞANTİYE'YE DESTEK</small><h3>Site ücretsiz, kahve gönüllü.</h3><p>Sitemizin gelişmesi için bağışta bulunabilirsiniz. Bir kahve, birkaç satır kod ve biraz da moral desteği kabul ediyoruz.</p><button type="button" data-donation-open>Bağış bilgilerini gör →</button></div></aside>
+				</div>
+			</section>
+		</main>
+		<footer><span>© 2026 USTAŞANTİYE</span><span>Şantiyeler · Ustalar · Tedarikçiler</span></footer>
+	</div>
+
+	<div class="modal-backdrop" id="modal"><div class="modal"><div class="modal-head"><h2>Yeni ilan oluştur</h2><button class="close" data-close-modal>×</button></div><form id="listingForm" class="form-grid"><label>İlan başlığı<input name="title" placeholder="Örn. 8 kişilik kalıpçı ekibi aranıyor" required></label><label>İlan türü<select name="role"><option value="santiye">Şantiye arıyor</option><option value="usta">Usta / ekip arıyor</option><option value="firma">Firma arıyor</option></select></label><label>Kategori<select name="category"><option value="kalıp">Kalıp &amp; beton</option><option value="demir">Demir işleri</option><option value="hafriyat">Hafriyat</option><option value="makine">İş makineleri &amp; operatör</option><option value="elektrik">Elektrik</option><option value="tesisat">Sıhhi tesisat</option><option value="su">Su &amp; kanalizasyon</option><option value="dogalgaz">Doğalgaz</option><option value="boya">Boya &amp; badana</option><option value="siva">Sıva &amp; alçı</option><option value="duvar">Duvar &amp; tuğla</option><option value="seramik">Seramik &amp; mermer</option><option value="yalitim">Yalıtım</option><option value="cati">Çatı işleri</option><option value="kaynak">Kaynak işleri</option><option value="marangoz">Marangoz &amp; ahşap</option><option value="peyzaj">Peyzaj</option><option value="nakliye">Nakliye &amp; lojistik</option><option value="konteyner">Konteyner</option><option value="yemek">Yemek &amp; catering</option><option value="isguvenligi">İş güvenliği</option><option value="temizlik">Şantiye temizliği</option><option value="guvenlik">Güvenlik</option><option value="malzeme">Yapı malzemeleri</option></select></label><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><label>İl<select name="province" id="provinceSelect" required><option value="">İl seçin</option></select></label><label>İlçe<select name="district" id="districtSelect" required disabled><option value="">Önce il seçin</option></select></label></div><label>Açıklama<textarea name="description" placeholder="İlanını detaylandır..." required></textarea></label><button class="primary" type="submit">İlanı yayınla</button></form></div></div>
+	<div class="modal-backdrop donation-page" id="donationModal">
+		<div class="donation-layout">
+			<header class="donation-topbar">
+				<div class="donation-topbar-left">
+					<button class="donation-utility-pill" type="button" data-donation-home aria-label="Ana sayfa">
+						<span class="icon">⌂</span>
+					</button>
+				</div>
+				<button class="close donation-close" type="button" data-close-donation aria-label="Kapat">×</button>
+			</header>
+			<main class="donation-content">
+				<div class="donation-card">
+					<h1>USTAŞANTİYE'YE DESTEK</h1>
+					<p class="donation-intro">Bu platformu oluştururken tek bir amacım vardı: İçeriklerin ve hizmetin herkese tamamen ücretsiz, engelsiz bir şekilde ulaşması. Sitedeki her şey dün olduğu gibi bugün de tamamen ücretsiz ve hep öyle kalacak.<br><br>
+
+Ancak perde arkasında işler biraz masraflı yürüyor... Sunucu ve yayınlama giderleri için her ay düzenli bir fatura ödüyorum. Üzerine siteye yeni özellikler eklemek ve geliştirmek için harcadığım bütçe de eklenince, sunucular hafiften cüzdanımı yakmaya başladı. 🔥<br><br>
+
+Hiç kimse bir kuruş dahi ödemek zorunda değil, burası tamamen sizin gönlünüzden kopanlara emanet. Eğer "Bu site benim çok işime yarıyor, geliştiricisine de bir kahve ısmarlayayım, sunucu alev almasın" derseniz; <strong>"Bağış Yap"</strong> butonuna tıklayarak IBAN üzerinden küçük bir destekte bulunabilirsiniz.<br><br>
+
+Destek veren, veremeyen, sadece girip siteyi kullanan herkese şimdiden çok teşekkürler! ☕</p>
+					<div id="donationAccounts" class="donation-accounts"></div>
+					<div class="donation-name"><span>Ad Soyad</span><strong id="donationAccountName">SÜLEYMAN KOTUMAR</strong></div>
+				</div>
+			</main>
+		</div>
+	</div>
+
+	<div id="publicProfilePosts" hidden></div>
+	<script>
+		document.body.insertAdjacentHTML('beforeend', `<div class="modal-backdrop" id="profileModal"><div class="modal"><div class="modal-head"><h2>Profilini tamamla</h2></div><p class="verification-message">Hesabın açıldı. İlan vermeye başlamadan önce aşağıdaki bilgileri tamamla.</p><form id="profileForm" class="form-grid"><label>Telefon<input name="phone" type="tel" autocomplete="tel" placeholder="05XX XXX XX XX" required></label><label>Hesap türü<select name="userType" required><option value="">Seçin</option><option value="santiye">Şantiye hesabı</option><option value="usta">Usta / ekip hesabı</option></select></label><label>İl<input name="province" placeholder="İl" required></label><label>İlçe<input name="district" placeholder="İlçe" required></label><p id="profileMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Profili tamamla</button></form></div></div>`);
+		document.querySelector('#profileModal .modal').classList.add('profile-screen'); document.querySelector('#profileModal .modal').innerHTML=`<div class="modal-head"><h2>Profil ekranı</h2><button class="close" data-close-profile>×</button></div><div class="profile-header"><div class="profile-avatar" id="profileAvatar">PT</div><div class="profile-header-copy"><div class="profile-title-row"><h3 class="profile-name" id="profileName">Profil Test</h3><span id="profileRole" aria-label="Hesap türü">Profil tamamlanıyor</span></div><div class="profile-meta"><span id="profileMetaPhone">İletişim: Bilgi eklenmedi</span><span id="profileMetaLocation">Konum: Bilgi eklenmedi</span><span id="profileMetaExperience">Deneyim: Belirtilmedi</span><span id="profileMetaRating" class="profile-rating">Ortalama puan: Henüz puan yok</span></div></div></div><div class="profile-grid"><div class="profile-column"><div class="profile-card"><form id="profileForm" class="form-grid"><label>Telefon<input name="phone" type="tel" autocomplete="tel" placeholder="05XX XXX XX XX" required></label><label>Hesap türü<select name="userType" required><option value="">Seçin</option><option value="santiye">Şantiye hesabı</option><option value="usta">Usta / ekip hesabı</option></select></label><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><label>İl<input name="province" placeholder="İl" required></label><label>İlçe<input name="district" placeholder="İlçe" required></label></div><p id="profileMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Profili tamamla</button></form></div></div></div></div>`;
+		document.querySelector('#profileModal .profile-header').insertAdjacentHTML('afterend','<div class="admin-profile-stats" id="adminProfileStats"><small>Siteye kayıtlı kullanıcı</small><strong id="adminProfileUserCount">0</strong></div>');
+		document.querySelector('#profileModal .modal-head').insertAdjacentHTML('beforeend','<div class="profile-nav"><button type="button" data-profile-notifications>Bildirimler</button><button type="button" data-profile-messages>Mesajlar</button><button type="button" data-profile-home>Ana sayfa</button><button type="button" data-profile-logout>Çıkış yap</button></div><button class="ghost" type="button" data-edit-profile>Bilgileri güncelle</button>'); document.querySelector('#profileForm button[type="submit"]').insertAdjacentHTML('beforebegin','<label>Deneyim yılı<input name="experienceYears" type="number" min="0" max="80" placeholder="Örn. 8" required></label>');
+		document.querySelector('#profileModal .modal').insertAdjacentHTML('beforeend','<section class="profile-posts"><aside class="profile-listings profile-listings-left"><div class="profile-posts-head"><h3>İlanlarım</h3></div><div id="profileListings"></div></aside><div class="profile-posts-main"><div class="profile-listings-toolbar"><button class="profile-add-listing-button" type="button" id="addWorkExperienceButton" data-mode="listing" onclick="const modal=document.querySelector(\'#modal\'); if(modal){ modal.dataset.context=\'profile\'; modal.classList.add(\'open\'); const first=modal.querySelector(\'input, select, textarea\'); if(first){ requestAnimationFrame(()=>first.focus()); } } return false;">İlan ekle</button></div><div id="workExperienceFormWrapper" hidden><form id="workExperienceForm" class="form-grid"><label>Firma adı<input name="companyName" placeholder="Firma / müşteri adı" required></label><label>Yetkili telefon<input name="contactPhone" type="tel" placeholder="05XX XXX XX XX" required></label><label>Adres<textarea name="address" rows="2" placeholder="İş yapılan adres" required></textarea></label><label>Yaptığınız iş<textarea name="jobDescription" rows="3" placeholder="Ne iş yaptınız?" required></textarea></label><label>Fotoğraf ekle (opsiyonel)<input name="workPhoto" type="file" accept="image/*"></label><p id="workExperienceMessage" class="form-message" role="alert"></p><div style="display:flex;justify-content:flex-end;gap:10px"><button class="ghost" type="button" data-cancel-work-experience>İptal</button><button class="primary" type="submit">İşi kaydet</button></div></form></div><div class="profile-list" id="profileWorkExperiences"></div><div class="profile-list" id="profileReviews"></div></div></section>');
+
+		queueMicrotask(()=>{ const profileProvinceInput=document.querySelector('#profileForm input[name="province"]'); const profileDistrictInput=document.querySelector('#profileForm input[name="district"]'); profileProvinceInput.outerHTML='<select name="province" required><option value="">İl seçin</option></select>'; profileDistrictInput.outerHTML='<select name="district" required disabled><option value="">Önce il seçin</option></select>'; const profileProvinceSelect=document.querySelector('#profileForm select[name="province"]'); const profileDistrictSelect=document.querySelector('#profileForm select[name="district"]'); allProvinceNames.forEach(province=>profileProvinceSelect.insertAdjacentHTML('beforeend',`<option value="${province}">${province}</option>`)); profileProvinceSelect.addEventListener('change',()=>{ const districts=districtsByProvince[profileProvinceSelect.value]||['Merkez']; profileDistrictSelect.disabled=false; profileDistrictSelect.innerHTML=`<option value="">İlçe seçin</option>${districts.map(district=>`<option value="${district}">${district}</option>`).join('')}`; }); });
+		const listings = [];
+		const labels = { santiye:'ŞANTİYE İLANI', usta:'USTA İLANI', firma:'USTA İLANI' };
+		document.querySelector('#roleFilter option[value="santiye"]').textContent='Şantiye ilanı';
+		document.querySelector('#roleFilter option[value="usta"]').textContent='Usta ilanı';
+		document.querySelector('#listingForm option[value="santiye"]').textContent='Şantiye ilanı';
+		document.querySelector('#listingForm option[value="usta"]').textContent='Usta ilanı';
+		document.querySelector('#listingForm option[value="firma"]')?.remove();
+		function listingAge(item){ if(!item.createdAt)return item.age || 'az önce'; const elapsed=Math.max(0,Date.now()-new Date(item.createdAt).getTime()); const minutes=Math.floor(elapsed/60000); if(minutes<1)return 'az önce'; if(minutes<60)return `${minutes} dk önce`; const hours=Math.floor(minutes/60); if(hours<24)return `${hours} saat önce`; const days=Math.floor(hours/24); return days<7?`${days} gün önce`:new Date(item.createdAt).toLocaleDateString('tr-TR'); }
+		const provinceCoordinates = { İstanbul:[41.0082,28.9784], Ankara:[39.9334,32.8597], İzmir:[38.4237,27.1428], Bursa:[40.195,29.06], Kocaeli:[40.7654,29.9408], Antalya:[36.8969,30.7133], Mersin:[36.8121,34.6415], Adana:[37.0,35.3213], Gaziantep:[37.0662,37.3833], Konya:[37.8746,32.4932], Kayseri:[38.7225,35.4875], Sakarya:[40.7569,30.3781], Samsun:[41.2867,36.33], Eskişehir:[39.7667,30.5256], Bitlis:[38.4,42.1], Van:[38.5012,43.373], Diyarbakır:[37.9144,40.2306], Trabzon:[41.0015,39.7178], Malatya:[38.3552,38.3095], Muğla:[37.2153,28.3636] };
+		function distanceBetweenProvinces(firstProvince, secondProvince){ const first=provinceCoordinates[firstProvince]; const second=provinceCoordinates[secondProvince]; if(!first||!second)return null; const radians=value=>value*Math.PI/180; const latitudeDelta=radians(second[0]-first[0]); const longitudeDelta=radians(second[1]-first[1]); const latitudeOne=radians(first[0]); const latitudeTwo=radians(second[0]); const a=Math.sin(latitudeDelta/2)**2+Math.cos(latitudeOne)*Math.cos(latitudeTwo)*Math.sin(longitudeDelta/2)**2; return Math.round(6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))); }
+		function updateListingDistances(){ const viewerProvince=currentUser?.province; if(!viewerProvince)return; listings.forEach(item=>{ const listingProvince=String(item.location||'').split(',').pop().trim(); const distance=distanceBetweenProvinces(viewerProvince,listingProvince); if(distance!==null)item.distance=distance; }); }
+		function applyCityFilter(){ const selectedCity=cityFilter.options[cityFilter.selectedIndex]?.textContent || 'Tüm şehirler'; const cards=document.querySelectorAll('#feed .listing'); let visibleCount=0; cards.forEach(card=>{ const location=card.querySelector('.person small')?.textContent || ''; const visible=selectedCity==='Tüm şehirler' || location.includes(selectedCity); card.style.display=visible?'':'none'; if(visible)visibleCount+=1; }); document.querySelector('#empty').style.display=visibleCount?'none':'block'; }
+		const categoryNames = { kalıp:'Kalıp & beton', demir:'Demir işleri', hafriyat:'Hafriyat', makine:'İş makineleri & operatör', elektrik:'Elektrik', tesisat:'Sıhhi tesisat', su:'Su & kanalizasyon', dogalgaz:'Doğalgaz', boya:'Boya & badana', siva:'Sıva & alçı', duvar:'Duvar & tuğla', seramik:'Seramik & mermer', yalitim:'Yalıtım', cati:'Çatı işleri', kaynak:'Kaynak işleri', marangoz:'Marangoz & ahşap', peyzaj:'Peyzaj', nakliye:'Nakliye & lojistik', konteyner:'Konteyner', yemek:'Yemek & catering', isguvenligi:'İş güvenliği', temizlik:'Şantiye temizliği', guvenlik:'Güvenlik', malzeme:'Yapı malzemeleri' };
+		function updateListingCounts(){ const counts=new Map(); listings.forEach(item=>counts.set(item.category,(counts.get(item.category)||0)+1)); document.querySelectorAll('.category-item[data-category]').forEach(button=>{ button.querySelector('b').textContent=counts.get(button.dataset.category)||0; }); const totalElement=document.querySelector('[data-total-listings]'); if(totalElement)totalElement.textContent=`${listings.length} aktif ilan`; }
+		const districtsByProvince = { 'İstanbul':['Arnavutköy','Ataşehir','Avcılar','Başakşehir','Beylikdüzü','Büyükçekmece','Çatalca','Esenyurt','Kadıköy','Kartal','Pendik','Sancaktepe','Silivri','Tuzla','Ümraniye'], 'Ankara':['Akyurt','Altındağ','Beypazarı','Çankaya','Etimesgut','Gölbaşı','Keçiören','Mamak','Polatlı','Pursaklar','Sincan','Yenimahalle'], 'İzmir':['Aliağa','Bayraklı','Bergama','Bornova','Buca','Çeşme','Gaziemir','Karabağlar','Menemen','Torbalı','Urla'], 'Bursa':['Gemlik','Gürsu','İnegöl','İznik','Karacabey','Kestel','Nilüfer','Osmangazi','Mudanya','Yıldırım'], 'Kocaeli':['Başiskele','Çayırova','Darıca','Derince','Gebze','Gölcük','İzmit','Kandıra','Kartepe','Körfez'], 'Antalya':['Aksu','Alanya','Döşemealtı','Kepez','Konyaaltı','Kemer','Manavgat','Muratpaşa','Serik'], 'Mersin':['Akdeniz','Anamur','Erdemli','Mezitli','Mut','Silifke','Tarsus','Toroslar','Yenişehir'], 'Adana':['Aladağ','Ceyhan','Çukurova','Kozan','Sarıçam','Seyhan','Yüreğir'], 'Gaziantep':['Araban','İslahiye','Nizip','Nurdağı','Şahinbey','Şehitkamil','Oğuzeli'], 'Konya':['Akşehir','Beyşehir','Çumra','Ereğli','Karatay','Meram','Selçuklu'], 'Kayseri':['Bünyan','Develi','Hacılar','İncesu','Kocasinan','Melikgazi','Talas'], 'Sakarya':['Adapazarı','Akyazı','Arifiye','Erenler','Hendek','Serdivan','Sapanca'], 'Tekirdağ':['Çerkezköy','Çorlu','Kapaklı','Malkara','Muratlı','Saray','Süleymanpaşa'], 'Eskişehir':['Alpu','Çifteler','Odunpazarı','Seyitgazi','Tepebaşı'], 'Samsun':['Atakum','Bafra','Canik','Çarşamba','İlkadım','Tekkeköy','Vezirköprü'] };
+		Object.assign(districtsByProvince, { 'Adıyaman':['Besni','Çelikhan','Gerger','Gölbaşı','Kahta','Merkez','Samsat','Sincik','Tut'], 'Afyonkarahisar':['Başmakçı','Bayat','Bolvadin','Çay','Çobanlar','Dazkırı','Dinar','Emirdağ','Evciler','Hocalar','İhsaniye','İscehisar','Kızılören','Merkez','Sandıklı','Sinanpaşa','Sultandağı','Şuhut'], 'Ağrı':['Diyadin','Doğubayazıt','Eleşkirt','Hamur','Merkez','Patnos','Taşlıçay','Tutak'], 'Aksaray':['Ağaçören','Eskil','Gülağaç','Güzelyurt','Merkez','Ortaköy','Sarıyahşi','Sultanhanı'], 'Amasya':['Göynücek','Gümüşhacıköy','Hamamözü','Merkez','Merzifon','Suluova','Taşova'], 'Ardahan':['Damal','Göle','Hanak','Merkez','Posof','Çıldır'], 'Artvin':['Ardanuç','Arhavi','Borçka','Hopa','Kemalpaşa','Merkez','Murgul','Şavşat','Yusufeli'], 'Aydın':['Bozdoğan','Buharkent','Çine','Didim','Efeler','Germencik','İncirliova','Karacasu','Karpuzlu','Koçarlı','Köşk','Kuşadası','Kuyucak','Nazilli','Söke','Sultanhisar','Yenipazar'], 'Balıkesir':['Altıeylül','Ayvalık','Balya','Bandırma','Bigadiç','Burhaniye','Dursunbey','Edremit','Erdek','Gönen','Gömeç','Havran','İvrindi','Karesi','Kepsut','Manyas','Marmara','Savaştepe','Sındırgı','Susurluk'], 'Bartın':['Amasra','Kurucaşile','Merkez','Ulus'], 'Batman':['Beşiri','Gercüş','Hasankeyf','Kozluk','Merkez','Sason'], 'Bayburt':['Aydıntepe','Demirözü','Merkez'], 'Bilecik':['Bozüyük','Gölpazarı','İnhisar','Merkez','Osmaneli','Pazaryeri','Söğüt','Yenipazar'], 'Bingöl':['Adaklı','Genç','Karlıova','Kiğı','Merkez','Solhan','Yayladere','Yedisu'], 'Bitlis':['Adilcevaz','Ahlat','Güroymak','Hizan','Merkez','Mutki','Tatvan'], 'Bolu':['Dörtdivan','Gerede','Göynük','Kıbrıscık','Mengen','Merkez','Mudurnu','Seben','Yeniçağa'], 'Burdur':['Ağlasun','Altınyayla','Bucak','Çavdır','Çeltikçi','Gölhisar','Karamanlı','Kemer','Merkez','Tefenni','Yeşilova'], 'Çanakkale':['Ayvacık','Bayramiç','Biga','Bozcaada','Çan','Eceabat','Ezine','Gelibolu','Gökçeada','Lapseki','Merkez','Yenice'], 'Çankırı':['Atkaracalar','Bayramören','Çerkeş','Eldivan','Ilgaz','Kızılırmak','Korgun','Kurşunlu','Merkez','Orta','Şabanözü','Yapraklı'], 'Çorum':['Alaca','Bayat','Boğazkale','Dodurga','İskilip','Kargı','Laçin','Mecitözü','Merkez','Oğuzlar','Ortaköy','Osmancık','Sungurlu','Uğurludağ'], 'Denizli':['Acıpayam','Babadağ','Baklan','Bekilli','Beyağaç','Bozkurt','Buldan','Çal','Çameli','Çardak','Çivril','Güney','Honaz','Kale','Merkezefendi','Pamukkale','Sarayköy','Serinhisar','Tavas'], 'Diyarbakır':['Bağlar','Bismil','Çermik','Çınar','Çüngüş','Dicle','Eğil','Ergani','Hani','Hazro','Kayapınar','Kocaköy','Kulp','Lice','Silvan','Sur','Yenişehir'], 'Düzce':['Akçakoca','Çilimli','Cumayeri','Gölyaka','Gümüşova','Kaynaşlı','Merkez','Yığılca'], 'Edirne':['Enez','Havsa','İpsala','Keşan','Lalapaşa','Meriç','Merkez','Süloğlu','Uzunköprü'], 'Elazığ':['Ağın','Alacakaya','Arıcak','Baskil','Karakoçan','Keban','Kovancılar','Maden','Merkez','Palu','Sivrice'], 'Erzincan':['Çayırlı','İliç','Kemah','Kemaliye','Merkez','Otlukbeli','Refahiye','Tercan','Üzümlü'], 'Erzurum':['Aşkale','Aziziye','Çat','Çat','Hınıs','Horasan','İspir','Karaçoban','Karayazı','Köprüköy','Narman','Oltu','Olur','Palandöken','Pasinler','Pazaryolu','Şenkaya','Tekman','Tortum','Uzundere','Yakutiye'], 'Giresun':['Alucra','Bulancak','Çamoluk','Çanakçı','Dereli','Doğankent','Espiye','Eynesil','Görele','Güce','Keşap','Merkez','Piraziz','Şebinkarahisar','Tirebolu','Yağlıdere'], 'Gümüşhane':['Kelkit','Köse','Kürtün','Merkez','Şiran','Torul'], 'Hakkari':['Çukurca','Derecik','Merkez','Şemdinli','Yüksekova'], 'Hatay':['Altınözü','Antakya','Arsuz','Belen','Defne','Dörtyol','Erzin','Hassa','İskenderun','Kırıkhan','Kumlu','Payas','Reyhanlı','Samandağ','Yayladağı'], 'Iğdır':['Aralık','Karakoyunlu','Merkez','Tuzluca'], 'Isparta':['Aksu','Atabey','Eğirdir','Gelendost','Gönen','Keçiborlu','Merkez','Senirkent','Sütçüler','Şarkikaraağaç','Uluborlu','Yalvaç','Yenişarbademli'], 'Kahramanmaraş':['Afşin','Andırın','Çağlayancerit','Dulkadiroğlu','Ekinözü','Elbistan','Göksun','Nurhak','Onikişubat','Pazarcık','Türkoğlu'], 'Karabük':['Eflani','Eskipazar','Merkez','Ovacık','Safranbolu','Yenice'], 'Karaman':['Ayrancı','Başyayla','Ermenek','Kazımkarabekir','Merkez','Sarıveliler'], 'Kars':['Akyaka','Arpaçay','Digor','Kağızman','Merkez','Sarıkamış','Selim','Susuz'], 'Kastamonu':['Abana','Ağlı','Araç','Azdavay','Bozkurt','Cide','Çatalzeytin','Daday','Devrekani','Doğanyurt','Hanönü','İhsangazi','İnebolu','Küre','Merkez','Pınarbaşı','Seydiler','Şenpazar','Taşköprü','Tosya'], 'Kırıkkale':['Bahşılı','Balışeyh','Çelebi','Delice','Karakeçili','Keskin','Merkez','Sulakyurt','Yahşihan'], 'Kırklareli':['Babaeski','Demirköy','Kofçaz','Lüleburgaz','Merkez','Pehlivanköy','Pınarhisar','Vize'], 'Kırşehir':['Akçakent','Akpınar','Boztepe','Çiçekdağı','Kaman','Merkez','Mucur'], 'Kütahya':['Altıntaş','Aslanapa','Çavdarhisar','Domaniç','Dumlupınar','Emet','Gediz','Hisarcık','Merkez','Pazarlar','Şaphane','Simav','Tavşanlı'], 'Malatya':['Akçadağ','Arapgir','Arguvan','Battalgazi','Darende','Doğanşehir','Doğanyol','Hekimhan','Kale','Kuluncak','Pütürge','Yazıhan','Yeşilyurt'], 'Manisa':['Ahmetli','Akhisar','Alaşehir','Demirci','Gölmarmara','Gördes','Kırkağaç','Köprübaşı','Kula','Salihli','Sarıgöl','Saruhanlı','Selendi','Soma','Şehzadeler','Turgutlu','Yunusemre'], 'Mardin':['Artuklu','Dargeçit','Derik','Kızıltepe','Mazıdağı','Midyat','Nusaybin','Ömerli','Savur','Yeşilli'], 'Muğla':['Bodrum','Dalaman','Datça','Fethiye','Kavaklıdere','Köyceğiz','Marmaris','Menteşe','Milas','Ortaca','Seydikemer','Ula','Yatağan'], 'Muş':['Bulanık','Hasköy','Korkut','Malazgirt','Merkez','Varto'], 'Nevşehir':['Acıgöl','Avanos','Derinkuyu','Gülşehir','Hacıbektaş','Kozaklı','Merkez','Ürgüp'], 'Niğde':['Altunhisar','Bor','Çamardı','Çiftlik','Merkez','Ulukışla'], 'Ordu':['Akkuş','Altınordu','Aybastı','Çamaş','Çatalpınar','Çaybaşı','Fatsa','Gölköy','Gülyalı','Gürgentepe','İkizce','Kabataş','Kabadüz','Korgan','Kumru','Mesudiye','Perşembe','Ulubey','Ünye'], 'Osmaniye':['Bahçe','Düziçi','Hasanbeyli','Kadirli','Merkez','Sumbas','Toprakkale'], 'Rize':['Ardeşen','Çamlıhemşin','Çayeli','Derepazarı','Fındıklı','Güneysu','Hemşin','İkizdere','İyidere','Kalkandere','Merkez','Pazar'], 'Siirt':['Aydınlar','Baykan','Eruh','Kurtalan','Merkez','Pervari','Şirvan'], 'Sinop':['Ayancık','Boyabat','Dikmen','Durağan','Erfelek','Gerze','Merkez','Saraydüzü','Türkeli'], 'Sivas':['Akıncılar','Altınyayla','Divriği','Doğanşar','Gemerek','Gölova','Gürün','Hafik','İmranlı','Kangal','Koyulhisar','Merkez','Suşehri','Şarkışla','Ulaş','Yıldızeli','Zara'], 'Şanlıurfa':['Akçakale','Birecik','Bozova','Ceylanpınar','Eyyübiye','Halfeti','Haliliye','Harran','Hilvan','Karaköprü','Siverek','Suruç','Viranşehir'], 'Şırnak':['Beytüşşebap','Cizre','Güçlükonak','İdil','Silopi','Şırnak','Uludere'], 'Tokat':['Almus','Artova','Başçiftlik','Erbaa','Merkez','Niksar','Pazar','Reşadiye','Sulusaray','Turhal','Yeşilyurt','Zile'], 'Trabzon':['Akçaabat','Araklı','Arsin','Beşikdüzü','Çarşıbaşı','Çaykara','Dernekpazarı','Düzköy','Hayrat','Köprübaşı','Maçka','Of','Ortahisar','Sürmene','Şalpazarı','Tonya','Vakfıkebir','Yomra'], 'Tunceli':['Çemişgezek','Hozat','Mazgirt','Merkez','Nazımiye','Ovacık','Pertek','Pülümür'], 'Uşak':['Banaz','Eşme','Karahallı','Merkez','Sivaslı','Ulubey'], 'Van':['Bahçesaray','Başkale','Çaldıran','Çatak','Edremit','Erciş','Gevaş','Gürpınar','İpekyolu','Muradiye','Özalp','Saray','Tuşba'], 'Yalova':['Altınova','Armutlu','Çınarcık','Çiftlikköy','Merkez','Termal'], 'Yozgat':['Akdağmadeni','Aydıncık','Boğazlıyan','Çandır','Çayıralan','Çekerek','Kadışehri','Merkez','Saraykent','Sarıkaya','Sorgun','Şefaatli','Yerköy'], 'Zonguldak':['Alaplı','Çaycuma','Devrek','Ereğli','Gökçebey','Kilimli','Kozlu','Merkez'] });
+		const allProvinceNames = ['Adana','Adıyaman','Afyonkarahisar','Ağrı','Aksaray','Amasya','Ankara','Antalya','Ardahan','Artvin','Aydın','Balıkesir','Bartın','Batman','Bayburt','Bilecik','Bingöl','Bitlis','Bolu','Burdur','Bursa','Çanakkale','Çankırı','Çorum','Denizli','Diyarbakır','Düzce','Edirne','Elazığ','Erzincan','Erzurum','Eskişehir','Gaziantep','Giresun','Gümüşhane','Hakkari','Hatay','Iğdır','Isparta','İstanbul','İzmir','Kahramanmaraş','Karabük','Karaman','Kars','Kastamonu','Kayseri','Kilis','Kırıkkale','Kırklareli','Kırşehir','Kocaeli','Konya','Kütahya','Malatya','Manisa','Mardin','Mersin','Muğla','Muş','Nevşehir','Niğde','Ordu','Osmaniye','Rize','Sakarya','Samsun','Siirt','Sinop','Sivas','Şanlıurfa','Şırnak','Tekirdağ','Tokat','Trabzon','Tunceli','Uşak','Van','Yalova','Yozgat','Zonguldak'];
+		const provinceSelect = document.querySelector('#provinceSelect');
+		const cityFilter = document.querySelector('#distanceFilter');
+		cityFilter.innerHTML = '<option value="all">Tüm şehirler</option>';
+		const districtSelect = document.querySelector('#districtSelect');
+		allProvinceNames.forEach(province => { provinceSelect.insertAdjacentHTML('beforeend', `<option value="${province}">${province}</option>`); cityFilter.insertAdjacentHTML('beforeend', `<option value="all">${province}</option>`); });
+		cityFilter.addEventListener('change', () => { render(); const selectedCity=cityFilter.options[cityFilter.selectedIndex]?.textContent || 'Tüm şehirler'; const cards=document.querySelectorAll('#feed .listing'); let visibleCount=0; cards.forEach(card=>{ const location=card.querySelector('.person small')?.textContent || ''; const visible=selectedCity==='Tüm şehirler' || location.includes(selectedCity); card.style.display=visible?'':'none'; if(visible)visibleCount+=1; }); document.querySelector('#empty').style.display=visibleCount?'none':'block'; });
+		provinceSelect.addEventListener('change', () => { const districts = districtsByProvince[provinceSelect.value] || ['Merkez']; districtSelect.disabled = false; districtSelect.innerHTML = `<option value="">İlçe seçin</option>${districts.map(district => `<option value="${district}">${district}</option>`).join('')}`; });
+		const feed = document.querySelector('#feed');
+		let selectedCategory = 'all';
+		let isAuthenticated = false;
+		function syncCategorySelection(nextCategory){
+			selectedCategory = nextCategory || 'all';
+			document.querySelectorAll('.category-item').forEach(button => button.classList.toggle('active', button.dataset.category === selectedCategory));
+			const categoryFilterSelect = document.querySelector('#categoryFilter');
+			if (categoryFilterSelect) categoryFilterSelect.value = selectedCategory;
+			render();
+		}
+		document.querySelectorAll('.category-item').forEach(button => {
+			button.addEventListener('click', () => {
+				syncCategorySelection(button.dataset.category);
+				document.querySelector('#akış')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			});
+		});
+		document.body.insertAdjacentHTML('beforeend','<div class="modal-backdrop" id="chatModal"><div class="modal chat-modal"><div class="chat-head"><div class="avatar" id="chatAvatar">--</div><div><strong id="chatUser">İlan sahibi</strong><small id="chatListing">İlan hakkında mesajlaşma</small></div><button class="close" type="button" data-close-chat>×</button></div><div class="chat-body" id="chatMessages"></div><form class="chat-compose" id="chatForm"><input id="chatInput" autocomplete="off" placeholder="Mesajını yaz..." required><button type="submit">Gönder</button></form></div></div>');
+		document.body.insertAdjacentHTML('beforeend','<div class="modal-backdrop" id="loginModal"><div class="modal"><div class="modal-head"><h2>Giriş yap</h2><button class="close" type="button" data-close-login>×</button></div><form id="loginForm" class="form-grid"><label>E-posta<input name="email" type="email" autocomplete="email" placeholder="ornek@gmail.com" required></label><label>Şifre<input name="password" type="password" autocomplete="current-password" minlength="8" required></label><p id="loginMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Giriş yap</button><button class="ghost google-auth" type="button" data-google-login><span class="google-mark" aria-hidden="true">G</span>Gmail ile giriş yap</button><button class="ghost" type="button" data-open-register-from-login>Hesabın yok mu? Kaydol</button></form></div></div>');
+		document.body.insertAdjacentHTML('beforeend','<div class="modal-backdrop" id="adminTotpModal"><div class="modal"><div class="modal-head"><h2>Admin doğrulaması</h2><button class="close" type="button" data-close-admin-totp>×</button></div><div id="adminTotpSetup" class="auth-code-panel"><div class="qr-box"><img id="adminTotpQr" alt="Google Authenticator QR" src=""><div><small>Google Authenticator</small><strong id="adminTotpSecret">-</strong></div></div><p>Telefonunuzda Google Authenticator açın, QR kodu taratın veya kodu manuel girin.</p></div><form id="adminTotpForm" class="form-grid"><label>Google Authenticator kodu<input name="authCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" minlength="6" pattern="[0-9]{6}" placeholder="123456" required></label><p id="adminTotpMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Doğrula</button></form></div></div>');
+		document.body.insertAdjacentHTML('beforeend','<div class="header-popover messages-modal" id="messagesModal"><div class="modal-head"><h2>Mesajlar</h2><button class="close" type="button" data-close-messages>×</button></div><div class="message-list" id="messageList"></div></div>');
+		document.body.insertAdjacentHTML('beforeend','<div class="header-popover" id="notificationsModal"><div class="modal-head"><h2>Bildirimler</h2><button class="close" type="button" data-close-notifications>×</button></div><div class="message-list" id="notificationList"></div></div>');
+		document.body.insertAdjacentHTML('beforeend','<div class="announcement-detail-modal" id="announcementDetailModal"><div class="announcement-detail-panel"><div class="announcement-detail-head"><h3 id="announcementDetailTitle">Duyuru</h3><button class="close" type="button" data-close-announcement-detail>×</button></div><div class="announcement-detail-body"><p id="announcementDetailText"></p></div></div></div>');
+		document.body.insertAdjacentHTML('beforeend','<div class="modal-backdrop" id="publicProfileModal"><div class="modal public-profile-modal"><div class="public-profile-hero"><div class="avatar" id="publicProfileAvatar">--</div><div><h2 id="publicProfileName">Kullanıcı profili</h2><p id="publicProfileRole">Profil bilgileri</p></div><button class="close" type="button" data-close-public-profile>×</button></div><div class="public-profile-body"><div class="public-profile-item"><small>Telefon</small><strong id="publicProfilePhone">-</strong></div><div class="public-profile-item"><small>Konum</small><strong id="publicProfileLocation">-</strong></div><div class="public-profile-item"><small>Deneyim</small><strong id="publicProfileExperience">-</strong></div><div class="public-profile-item"><small>Hesap türü</small><strong id="publicProfileType">-</strong></div></div><div class="public-profile-actions"><button type="button" id="publicProfileMessage">Mesaj gönder</button></div></div></div>');
+		const chatModal=document.querySelector('#chatModal'); const chatMessages=document.querySelector('#chatMessages'); const chatForm=document.querySelector('#chatForm'); const chatInput=document.querySelector('#chatInput'); const chatConversations=new Map(); let activeConversation=''; let activeRecipientEmail='';
+		document.body.insertAdjacentHTML('beforeend','<div class="site-confirm" id="siteConfirm"><div class="site-confirm-panel" role="dialog" aria-modal="true" aria-labelledby="siteConfirmTitle"><h2 id="siteConfirmTitle">Onay gerekli</h2><p id="siteConfirmText"></p><div class="site-confirm-actions"><button class="site-confirm-cancel" type="button" id="siteConfirmCancel">İptal</button><button class="site-confirm-ok" type="button" id="siteConfirmOk">Onayla</button></div></div></div>');
+		const siteConfirm=document.querySelector('#siteConfirm'); const siteConfirmText=document.querySelector('#siteConfirmText'); const siteConfirmCancel=document.querySelector('#siteConfirmCancel'); const siteConfirmOk=document.querySelector('#siteConfirmOk'); let siteConfirmResolve=null;
+		function requestSiteConfirm(message){ siteConfirmText.textContent=message; siteConfirm.classList.add('open'); siteConfirmOk.focus(); return new Promise(resolve=>{ siteConfirmResolve=resolve; }); }
+		function closeSiteConfirm(result){ siteConfirm.classList.remove('open'); if(siteConfirmResolve){ const resolve=siteConfirmResolve; siteConfirmResolve=null; resolve(result); } }
+		siteConfirmCancel.addEventListener('click',()=>closeSiteConfirm(false)); siteConfirmOk.addEventListener('click',()=>closeSiteConfirm(true)); siteConfirm.addEventListener('click',event=>{ if(event.target===siteConfirm)closeSiteConfirm(false); });
+		document.querySelector('#loginForm').insertAdjacentHTML('beforeend','<button class="ghost" type="button" data-forgot-password>Şifremi unuttum</button>');
+		document.body.insertAdjacentHTML('beforeend','<div class="modal-backdrop" id="passwordResetModal"><div class="modal"><div class="modal-head"><h2>Şifremi unuttum</h2><button class="close" type="button" data-close-password-reset>×</button></div><form id="resetRequestForm" class="form-grid reset-step"><p class="verification-message">Kayıtlı e-posta adresini yaz. Bu adrese doğrulama kodu göndereceğiz.</p><label>E-posta<input name="email" type="email" autocomplete="email" placeholder="ornek@gmail.com" required></label><p id="resetRequestMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Kod gönder</button></form><form id="resetCodeForm" class="form-grid reset-step" hidden><p id="resetCodeNote" class="reset-code-note"></p><label>Doğrulama kodu<input name="code" inputmode="numeric" autocomplete="one-time-code" minlength="6" maxlength="6" pattern="[0-9]{6}" placeholder="123456" required></label><p id="resetCodeMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Kodu doğrula</button></form><form id="resetPasswordForm" class="form-grid reset-step" hidden><p class="verification-message">Yeni şifreni oluştur. En az 8 karakter ve 1 rakam kullan.</p><label>Yeni şifre<input name="password" type="password" autocomplete="new-password" minlength="8" pattern="(?=.*\\d).{8,}" required></label><label>Yeni şifre tekrar<input name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" required></label><p id="resetPasswordMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Şifreyi yenile</button></form></div></div>');
+		const passwordResetModal=document.querySelector('#passwordResetModal'); const resetRequestForm=document.querySelector('#resetRequestForm'); const resetCodeForm=document.querySelector('#resetCodeForm'); const resetPasswordForm=document.querySelector('#resetPasswordForm'); let passwordResetEmail=''; let passwordResetToken='';
+		function showResetStep(step){ [resetRequestForm,resetCodeForm,resetPasswordForm].forEach(form=>form.hidden=form!==step); }
+		function resetPasswordFlow(){ passwordResetEmail=''; passwordResetToken=''; resetRequestForm.reset(); resetCodeForm.reset(); resetPasswordForm.reset(); document.querySelector('#resetRequestMessage').className='form-message'; document.querySelector('#resetCodeMessage').className='form-message'; document.querySelector('#resetPasswordMessage').className='form-message'; showResetStep(resetRequestForm); }
+		document.querySelector('[data-forgot-password]').addEventListener('click',()=>{ loginModal.classList.remove('open'); resetPasswordFlow(); passwordResetModal.classList.add('open'); }); document.querySelector('[data-close-password-reset]').addEventListener('click',()=>passwordResetModal.classList.remove('open')); passwordResetModal.addEventListener('click',event=>{ if(event.target===passwordResetModal)passwordResetModal.classList.remove('open'); });
+		resetRequestForm.addEventListener('submit',async event=>{ event.preventDefault(); if(!resetRequestForm.checkValidity()){ resetRequestForm.reportValidity(); return; } const button=resetRequestForm.querySelector('button[type="submit"]'); const message=document.querySelector('#resetRequestMessage'); button.disabled=true; try { const data=Object.fromEntries(new FormData(resetRequestForm)); const response=await fetch('/api/auth/password-reset/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); passwordResetEmail=data.email; document.querySelector('#resetCodeNote').textContent=`Kod ${result.maskedEmail} adresine gönderildi.`; showResetStep(resetCodeForm); } catch(error) { message.textContent=error.message || 'Kod gönderilemedi.'; message.className='form-message show error'; } finally { button.disabled=false; } });
+		resetCodeForm.addEventListener('submit',async event=>{ event.preventDefault(); if(!resetCodeForm.checkValidity()){ resetCodeForm.reportValidity(); return; } const button=resetCodeForm.querySelector('button[type="submit"]'); const message=document.querySelector('#resetCodeMessage'); button.disabled=true; try { const data=Object.fromEntries(new FormData(resetCodeForm)); const response=await fetch('/api/auth/password-reset/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:passwordResetEmail,code:data.code})}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); passwordResetToken=result.resetToken; showResetStep(resetPasswordForm); } catch(error) { message.textContent=error.message || 'Kod doğrulanamadı.'; message.className='form-message show error'; } finally { button.disabled=false; } });
+		resetPasswordForm.addEventListener('submit',async event=>{ event.preventDefault(); if(!resetPasswordForm.checkValidity()){ resetPasswordForm.reportValidity(); return; } const data=Object.fromEntries(new FormData(resetPasswordForm)); const message=document.querySelector('#resetPasswordMessage'); if(data.password!==data.passwordConfirm){ message.textContent='Şifreler aynı olmalı.'; message.className='form-message show error'; return; } const button=resetPasswordForm.querySelector('button[type="submit"]'); button.disabled=true; try { const response=await fetch('/api/auth/password-reset/complete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:passwordResetEmail,resetToken:passwordResetToken,password:data.password})}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); passwordResetModal.classList.remove('open'); loginMessage.textContent=result.message; loginMessage.className='form-message show success'; loginForm.reset(); loginModal.classList.add('open'); resetPasswordFlow(); } catch(error) { message.textContent=error.message || 'Şifre yenilenemedi.'; message.className='form-message show error'; } finally { button.disabled=false; } });
+		function addChatMessage(message,type){ const messageElement=document.createElement('div'); messageElement.className=`chat-message ${type}`; messageElement.append(document.createTextNode(message)); const timeElement=document.createElement('small'); timeElement.textContent=`${type==='sent'?'Sen':'İlan sahibi'} · şimdi`; messageElement.appendChild(timeElement); chatMessages.appendChild(messageElement); chatMessages.scrollTop=chatMessages.scrollHeight; }
+		async function openChat(listing){ const userElement=listing.querySelector('.person strong'); const user=userElement ? userElement.childNodes[0].textContent.trim() : 'İlan sahibi'; const title=listing.querySelector('h3')?.textContent || 'İlan'; activeConversation=title; activeRecipientEmail=listing.dataset.ownerEmail || ''; document.querySelector('#chatUser').textContent=user; document.querySelector('#chatListing').textContent=title; document.querySelector('#chatAvatar').textContent=(user.match(/[A-Za-zÇĞİÖŞÜçğıöşü]/g)||['İ','S']).slice(0,2).join('').toUpperCase(); chatMessages.innerHTML=''; chatForm.classList.remove('matrix-dismiss'); chatInput.disabled=false; chatForm.querySelector('button').disabled=false; if(!activeRecipientEmail){ addChatMessage('Bu örnek ilanın sahibi henüz kayıtlı bir hesaba bağlanmadı. Mesajını yazabilirsin; göndermek için sahibinin hesabıyla oluşturduğu ilana ulaşmalısın.','received'); chatModal.classList.add('open'); chatInput.focus(); return; } if(currentUser?.email && currentUser.email.toLocaleLowerCase('tr-TR')===activeRecipientEmail.toLocaleLowerCase('tr-TR')){ addChatMessage('Kendinle yüzleşemezsin Neo :)','received'); chatInput.disabled=true; chatForm.querySelector('button').disabled=true; chatModal.classList.add('open'); chatForm.classList.add('matrix-dismiss'); return; } try { const response=await fetch(`/api/messages?with=${encodeURIComponent(activeRecipientEmail)}`); const result=await readApiResponse(response); if(response.status===401){ chatModal.classList.remove('open'); loginModal.classList.add('open'); return; } if(!response.ok)throw new Error(result.message); result.messages.forEach(item=>addChatMessage(item.text,item.senderEmail===activeRecipientEmail?'received':'sent')); } catch(error) { addChatMessage(error.message || 'Mesajlar yüklenemedi.','received'); } chatModal.classList.add('open'); chatInput.focus(); }
+		function closeChat(){ chatModal.classList.remove('open'); chatForm.classList.remove('matrix-dismiss'); chatInput.value=''; chatInput.disabled=false; chatForm.querySelector('button').disabled=false; }
+		const publicProfileModal=document.querySelector('#publicProfileModal'); publicProfileModal.querySelector('.modal').insertAdjacentHTML('beforeend','<section class="profile-posts"><aside class="profile-listings profile-listings-left"><div class="profile-posts-head"><h3>İlanları</h3></div><div id="publicProfileListings"></div></aside><aside class="profile-reviews"><div class="profile-posts-head"><h3>Müşteri yorumları</h3></div><div id="publicProfileReviews"></div><form class="review-form" id="reviewForm"><select name="rating" required><option value="">Puan seçin</option><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select><textarea name="text" maxlength="1000" placeholder="Yaptığı iş hakkındaki deneyiminizi yazın..." required></textarea><button class="primary" type="submit">Müşteri yorumu gönder</button></form></aside></section>'); let publicProfileEmail='';
+		function renderPostCards(posts, container, canInteract){ container.innerHTML=posts.length?posts.map(post=>`<article class="post-card" data-post-id="${post.id}">${post.image?`<img class="post-card-image" src="${post.image}" alt="İş paylaşımı">`:''}<div class="post-card-head"><div class="avatar">${post.ownerName.split(' ').map(part=>part[0]).join('').slice(0,2).toUpperCase()}</div><div><strong data-post-owner="${post.ownerEmail}">${post.ownerName}</strong><small>${new Date(post.createdAt).toLocaleDateString('tr-TR')}</small></div>${canInteract?`<div class="post-edit-actions"><button type="button" data-edit-post="${post.id}">Düzenle</button><button type="button" data-delete-post="${post.id}">Sil</button></div>`:''}</div><p>${post.description}</p><div class="post-actions"><button class="like-button ${post.likedByCurrentUser?'liked':''}" type="button" data-like-post="${post.id}" ${canInteract?'':'disabled'}><span class="like-icon">♡</span><span>${post.likes}</span></button><span style="color:var(--muted);font-size:11px">${post.comments.length} yorum</span></div><div class="post-comments"><strong class="comments-title">Gönderi yorumları</strong>${post.likeUsers?.length?`<div class="comment-item"><strong>Beğenenler:</strong> ${post.likeUsers.map(person=>`<strong data-comment-author="${person.email}">${person.name}</strong>`).join(', ')}</div>`:''}<div class="comment-list">${post.comments.map(comment=>`<div class="comment-item"><strong data-comment-author="${comment.authorEmail}">${comment.authorName}</strong> ${comment.text} ${comment.authorEmail===verificationEmail?`<span class="comment-edit-actions"><button type="button" data-edit-comment="${post.id}:${comment.id}">Düzenle</button><button type="button" data-delete-comment="${post.id}:${comment.id}">Sil</button></span>`:''}</div>`).join('')}</div>${canInteract?`<form class="comment-form" data-comment-form="${post.id}"><input name="text" maxlength="1000" placeholder="Yorum yaz..." required><button type="submit">Yorumla</button></form>`:''}</div></article>`).join(''):'<div class="empty-messages">Henüz iş paylaşımı yok.</div>'; }
+		function renderReviews(reviews, container){ if(!container) return; container.innerHTML=reviews.length?reviews.map(review=>`<article class="review-card"><strong data-comment-author="${review.authorEmail}">${review.author}</strong><div class="review-stars">${ratingStars(review.rating)}</div><p>${review.text}</p><small>${new Date(review.createdAt).toLocaleDateString('tr-TR')}</small>${review.authorEmail===verificationEmail?`<div class="review-actions"><button type="button" data-edit-review="${review.id}">Düzenle</button><button type="button" data-delete-review="${review.id}">Sil</button></div>`:''}</article>`).join(''):'<div class="empty-messages">Henüz müşteri değerlendirmesi yok.</div>'; }
+		function renderWorkExperiences(items, container, allowDelete=false){ if(!container)return; const workItems=items || []; if(!workItems.length){ container.innerHTML=''; return; } container.innerHTML=workItems.map(item=>`<article class="profile-job profile-job-card" data-work-id="${item.id || item.companyName}">${item.workPhoto?`<img class="post-card-image" src="${item.workPhoto}" alt="${item.companyName}">`:''}${allowDelete?`<button type="button" class="delete-work-button" data-delete-work="${item.id}" title="İşi sil" aria-label="İşi sil">🗑️</button>`:''}<strong>${item.companyName}</strong><small>${item.address} · ${new Date(item.createdAt).toLocaleDateString('tr-TR')}</small><p>${item.jobDescription}</p><div class="profile-job-meta"><span>Yetkili telefon: ${item.contactPhone}</span></div></article>`).join(''); }
+		async function openPublicProfile(email, listing){ try { let profile; if(email){ const response=await fetch(`/api/users/${encodeURIComponent(email)}/profile`); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); profile=result.profile; } else { const name=listing.querySelector('.person strong')?.childNodes[0]?.textContent.trim() || 'İlan sahibi'; profile={email:'',firstName:name,lastName:'',phone:'Telefon paylaşılmadı',province:listing.querySelector('.person small')?.textContent.split(' · ')[0] || 'Konum belirtilmedi',district:'',experienceYears:'Belirtilmedi',userType:'İlan sahibi',posts:[],reviews:[],ratingAverage:0}; } publicProfileEmail=profile.email; const fullName=`${profile.firstName} ${profile.lastName}`.trim(); document.querySelector('#publicProfileName').textContent=fullName; const publicRoleLabel=getAccountTypeLabel(profile.userType); document.querySelector('#publicProfileRole').innerHTML=`${getAccountTypeBadgeMarkup(profile.userType)}<span>${publicRoleLabel} · ${profile.ratingAverage?ratingStars(profile.ratingAverage):'Henüz puan yok'}</span>`; document.querySelector('#publicProfileAvatar').textContent=fullName.split(' ').map(part=>part[0]).join('').slice(0,2).toUpperCase(); document.querySelector('#publicProfilePhone').textContent=profile.phone; document.querySelector('#publicProfileLocation').textContent=`${profile.district ? `${profile.district}, ` : ''}${profile.province}`; document.querySelector('#publicProfileExperience').textContent=typeof profile.experienceYears==='number'?`${profile.experienceYears} yıl`:'Belirtilmedi'; document.querySelector('#publicProfileType').textContent=publicRoleLabel; renderWorkExperiences(profile.workExperiences || [], document.querySelector('#publicProfileWorkExperiences')); renderPostCards(profile.posts || [], document.querySelector('#publicProfilePosts'), false); renderReviews(profile.reviews || [], document.querySelector('#publicProfileReviews')); const listingResponse=await fetch('/api/listings'); const listingResult=await readApiResponse(listingResponse); if(listingResponse.ok)renderProfileListings((listingResult.listings || []).filter(item=>item.ownerEmail===publicProfileEmail),document.querySelector('#publicProfileListings'),false); document.querySelector('#reviewForm').hidden=!isAuthenticated || publicProfileEmail === verificationEmail || !publicProfileEmail; publicProfileModal.classList.add('open'); } catch(error) { alert(error.message || 'Profil yüklenemedi.'); } }
+		feed.addEventListener('click',event=>{ const lockedListing=event.target.closest('.auth-locked'); if(lockedListing){ loginMessage.className='form-message'; loginForm.reset(); loginModal.classList.add('open'); return; } const profileTarget=event.target.closest('[data-profile-email]'); if(profileTarget){ event.preventDefault(); openPublicProfile(profileTarget.dataset.profileEmail,profileTarget.closest('.listing')); return; } const contactButton=event.target.closest('.listing-foot button'); if(contactButton)openChat(contactButton.closest('.listing')); });
+		document.querySelector('[data-close-public-profile]').addEventListener('click',()=>publicProfileModal.classList.remove('open')); publicProfileModal.addEventListener('click',event=>{if(event.target===publicProfileModal)publicProfileModal.classList.remove('open')}); document.querySelector('#publicProfileMessage').addEventListener('click',()=>{ publicProfileModal.classList.remove('open'); const listing={dataset:{ownerEmail:publicProfileEmail},querySelector:selector=>selector==='h3'?{textContent:'Profil görüşmesi'}:selector==='.person strong'?{childNodes:[{textContent:document.querySelector('#publicProfileName').textContent}]}:null}; openChat(listing); });
+		document.querySelector('[data-close-chat]').addEventListener('click',closeChat); chatModal.addEventListener('click',event=>{if(event.target===chatModal)closeChat()});
+		chatForm.addEventListener('submit',async event=>{ event.preventDefault(); const text=chatInput.value.trim(); if(!text){ addChatMessage('Göndermek için bir mesaj yazmalısın.','received'); return; } if(!activeRecipientEmail){ addChatMessage('Bu ilanın sahibiyle mesajlaşmak için ilan sahibinin kayıtlı hesabına bağlı bir ilan açması gerekiyor.','received'); return; } const submitButton=chatForm.querySelector('button'); submitButton.disabled=true; try { const response=await fetch('/api/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({recipientEmail:activeRecipientEmail,text})}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); addChatMessage(result.message.text,'sent'); chatInput.value=''; } catch(error) { addChatMessage(error.message || 'Mesaj gönderilemedi.','received'); } finally { submitButton.disabled=false; } });
+		document.body.insertAdjacentHTML('beforeend', `<div class="modal-backdrop" id="registerModal"><div class="modal"><div class="modal-head"><h2>Hesap oluştur</h2><button class="close" data-close-register>×</button></div><form id="registrationForm" class="form-grid"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><label>Ad<input name="firstName" autocomplete="given-name" placeholder="Adınız" required></label><label>Soyad<input name="lastName" autocomplete="family-name" placeholder="Soyadınız" required></label></div><label>Mail adresi<input name="email" type="email" autocomplete="email" placeholder="ornek@gmail.com" required></label><label>Hesap türü<select name="userType" required><option value="">Seçin</option><option value="santiye">Şantiye hesabı</option><option value="usta">Usta / ekip hesabı</option></select></label><label>Şifre<div class="password-wrap"><input name="password" type="password" autocomplete="new-password" placeholder="En az 8 karakter ve 1 rakam" minlength="8" pattern="(?=.*\\d).{8,}" title="Şifre en az 8 karakter ve en az bir rakam içermelidir." required><button class="password-toggle" type="button" data-toggle-password>Göster</button></div></label><p id="registrationMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Kayıt ol</button><button class="ghost google-auth" type="button" data-google-register><span class="google-mark" aria-hidden="true">G</span>Gmail ile kayıt ol</button></form></div></div><div class="modal-backdrop" id="emailVerificationModal"><div class="modal"><div class="modal-head"><h2>E-postanı doğrula</h2><button class="close" data-close-email-verification>×</button></div><p class="verification-message">E-posta adresine gönderdiğimiz 6 haneli kodu girerek kaydını tamamla.</p><form id="emailVerificationForm" class="form-grid"><label>Doğrulama kodu<input name="code" inputmode="numeric" autocomplete="one-time-code" placeholder="123456" minlength="6" maxlength="6" pattern="[0-9]{6}" required></label><p id="verificationMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Kodu doğrula</button></form></div></div>`);
+		function render() { const term=document.querySelector('#search').value.toLocaleLowerCase('tr-TR'); const role=document.querySelector('#roleFilter').value; const distance=document.querySelector('#distanceFilter').value; const category=selectedCategory || document.querySelector('#categoryFilter').value; const filtered=listings.filter(item=>{ const matchesRole = role === 'all' || (role === 'santiye' ? item.role === 'santiye' : role === 'usta' ? ['usta','firma'].includes(item.role) : item.role === role); const matchesCategory = category === 'all' || item.category === category; const matchesDistance = distance === 'all' || item.distance <= Number(distance); const matchesSearch = `${item.title} ${item.user} ${item.location} ${item.text}`.toLocaleLowerCase('tr-TR').includes(term); return matchesRole && matchesCategory && matchesDistance && matchesSearch; }); feed.innerHTML=filtered.map(item=>isAuthenticated?`<article class="listing" data-owner-email="${item.ownerEmail || ''}"><div class="listing-top"><div class="person person-clickable" data-profile-email="${item.ownerEmail || ''}" title="Profili görüntüle"><div class="avatar">${item.initials}</div><div><strong>${item.user}${item.badge?`<span class="badge">✓ ${item.badge}</span>`:''}</strong><small>${item.location} · ${item.age}</small></div></div><span class="listing-tag">${labels[item.role]}</span></div><h3>${item.title}</h3><p>${item.text}</p><div class="listing-foot"><div class="meta"><span>⌖ ${item.distance} km</span><span>● ${categoryNames[item.category] || item.category}</span></div><button>İletişime geç →</button></div></article>`:`<article class="listing auth-locked" data-listing-locked><div class="listing-top"><div class="person"><div class="avatar">?</div><div><strong>Giriş yapınca ilanı gör</strong><small>${categoryNames[item.category] || item.category} · ${labels[item.role]}</small></div></div><span class="listing-tag">İLAN</span></div><h3>Bu ilanın detayları üyelere özel</h3><div class="listing-lock"><span>İlan bilgilerini görmek için giriş yapın veya kaydolun.</span><button type="button">Giriş yap</button></div></article>`).join(''); document.querySelector('#empty').classList.toggle('show',filtered.length===0); }
+		['search','roleFilter','distanceFilter'].forEach(id=>document.querySelector('#'+id).addEventListener('input',render));
+		document.querySelector('#categoryFilter').addEventListener('change', () => { selectedCategory = document.querySelector('#categoryFilter').value; document.querySelectorAll('.category-item').forEach(button => button.classList.toggle('active', button.dataset.category === selectedCategory)); render(); });
+		async function readApiResponse(response){ const responseText=await response.text(); try { return JSON.parse(responseText); } catch { if(response.status===403||responseText.trim()==='Forbidden.') throw new Error('403: Bu sayfa yanlış sunucudan açılmış. Terminalde node server.js çalıştırın ve sayfayı yalnızca http://localhost:3000 adresinden açın.'); throw new Error(`Sunucu geçersiz bir yanıt verdi (${response.status}).`); } }
+		const registerModal=document.querySelector('#registerModal'); const registrationForm=document.querySelector('#registrationForm'); const registrationMessage=document.querySelector('#registrationMessage'); const emailVerificationModal=document.querySelector('#emailVerificationModal'); const emailVerificationForm=document.querySelector('#emailVerificationForm'); const verificationMessage=document.querySelector('#verificationMessage'); const loginModal=document.querySelector('#loginModal'); const loginForm=document.querySelector('#loginForm'); const loginMessage=document.querySelector('#loginMessage'); const adminTotpModal = document.querySelector('#adminTotpModal'); const adminTotpForm = document.querySelector('#adminTotpForm'); const adminTotpMessage = document.querySelector('#adminTotpMessage'); const adminTotpQr = document.querySelector('#adminTotpQr'); const adminTotpSecret = document.querySelector('#adminTotpSecret'); const adminLoginEmail = 'kotumar@gmail.com'; let verificationEmail=''; let pendingAdminLogin = null;
+		function showToast(message, type = 'success', options = {}) {
+			const container = document.querySelector('#toastContainer');
+			if (!container) return;
+			const toast = document.createElement('div');
+			const title = type === 'success' ? 'Başarılı' : type === 'error' ? 'Hata' : 'Bilgi';
+			const duration = Number(options.duration ?? (type === 'error' ? 5000 : 4200));
+			toast.className = `toast toast-${type}`;
+			toast.innerHTML = `
+				<div class="toast-body">
+					<div class="toast-title">${title}</div>
+					<div class="toast-message">${message}</div>
+				</div>
+				${options.actionLabel ? `<button type="button" class="toast-action">${options.actionLabel}</button>` : ''}
+				<button type="button" class="toast-close" aria-label="Kapat">×</button>
+			`;
+			const closeToast = () => {
+				toast.classList.remove('visible');
+				setTimeout(() => toast.remove(), 180);
+				if (options.onClose) options.onClose();
+			};
+			const closeButton = toast.querySelector('.toast-close');
+			closeButton.addEventListener('click', closeToast);
+			const actionButton = toast.querySelector('.toast-action');
+			if (actionButton && options.onAction) {
+				actionButton.addEventListener('click', () => {
+					options.onAction();
+					closeToast();
+				});
+			}
+			container.appendChild(toast);
+			requestAnimationFrame(() => toast.classList.add('visible'));
+			if (duration > 0) setTimeout(closeToast, duration);
+			return toast;
+		}
+		function showConfirmToast(message, onConfirm) {
+			showToast(message, 'info', {
+				duration: 0,
+				actionLabel: 'Onayla',
+				onAction: onConfirm,
+				onClose: () => undefined
+			});
+		}
+		function syncAdminAuthenticatorUI(){
+			const setupPanel = document.querySelector('#adminTotpSetup');
+			if (!adminTotpQr || !adminTotpSecret || !setupPanel) return;
+			setupPanel.hidden = true;
+			adminTotpQr.src = '';
+			adminTotpQr.alt = 'Google Authenticator QR kodu';
+			adminTotpSecret.textContent = 'Gizli anahtar saklı';
+			if (adminTotpMessage) {
+				adminTotpMessage.className = 'form-message';
+				adminTotpMessage.textContent = 'Google Authenticator doğrulama kodunu girin.';
+			}
+		}
+		async function openAdminTotpPrompt(email){
+			pendingAdminLogin = { email: String(email || '').trim().toLowerCase() };
+			adminTotpMessage.className = 'form-message';
+			adminTotpMessage.textContent = 'Admin hesabını doğrulamak için Google Authenticator kodunu gir.';
+			adminTotpForm.reset();
+			try {
+				const response = await fetch('/api/admin/totp');
+				const result = await readApiResponse(response);
+				if (!response.ok) throw new Error(result.message || 'Google Authenticator bilgileri alınamadı.');
+				const setupPanel = document.querySelector('#adminTotpSetup');
+				const hasSetupSecret = Boolean(result.setupRequired && result.secret && result.qrUrl);
+				if (setupPanel) setupPanel.hidden = !hasSetupSecret;
+				adminTotpQr.src = hasSetupSecret ? result.qrUrl : '';
+				adminTotpSecret.textContent = hasSetupSecret ? result.secret : 'Gizli anahtar saklı';
+				loginModal.classList.remove('open');
+				adminTotpModal.classList.add('open');
+				setTimeout(() => adminTotpForm.elements.authCode.focus(), 100);
+			} catch (error) {
+				adminTotpMessage.textContent = error.message || 'Google Authenticator kurulumu alınamadı.';
+				adminTotpMessage.className = 'form-message show error';
+				const setupPanel = document.querySelector('#adminTotpSetup');
+				if (setupPanel) setupPanel.hidden = true;
+				adminTotpModal.classList.add('open');
+			}
+		}
+		async function openGoogleAccountChooser(mode){
+			const emailField = mode === 'login' ? loginForm.elements.email : registrationForm.elements.email;
+			const messageElement = mode === 'login' ? loginMessage : registrationMessage;
+			if (mode === 'register') {
+				const selectedType = registrationForm.elements.userType.value;
+				if (!selectedType) {
+					showFormMessage(messageElement, 'Hesap türünü seçmeden Gmail ile kaydolamazsın. Lütfen hesap türünü seçtikten sonra tekrar dene.', 'error');
+					registrationForm.elements.userType.focus();
+					return;
+				}
+			}
+			try { const response = await fetch('/api/auth/google/start'); const result = await readApiResponse(response); if (!response.ok) throw new Error(result.message); window.location.href = result.url; }
+			catch (error) { if (emailField) emailField.focus(); showFormMessage(messageElement, error.message || 'Google girişi başlatılamadı.', 'error'); }
+		}
+		document.querySelector('[data-google-login]').addEventListener('click',()=>openGoogleAccountChooser('login'));
+		document.querySelector('[data-google-register]').addEventListener('click',()=>openGoogleAccountChooser('register'));
+		const profileModal=document.querySelector('#profileModal'); const profileForm=document.querySelector('#profileForm'); const profileMessage=document.querySelector('#profileMessage'); const loginButton=document.querySelector('#loginButton'); const authActions=document.querySelector('#authActions'); const userActions=document.querySelector('#userActions'); const messagesModal=document.querySelector('#messagesModal'); const messageList=document.querySelector('#messageList'); const notificationsModal=document.querySelector('#notificationsModal'); const notificationList=document.querySelector('#notificationList'); const notificationsDot=document.querySelector('#notificationsButton').querySelector('.notification-dot'); const messagesDot=document.querySelector('#messagesButton').querySelector('.notification-dot'); const adminButton=document.querySelector('#adminButton'); const userDonationButton=userActions.querySelector('[data-donation-open]'); let currentUser=null;
+		function isAdminUser(user){ return Boolean(user && (user.userType === 'admin' || user.admin || user.email === 'kotumar@gmail.com')); }
+		async function refreshAdminProfileStats(){ const stats=document.querySelector('#adminProfileStats'); if(!stats)return; const visible=isAuthenticated && isAdminUser(currentUser); stats.classList.toggle('visible',visible); if(!visible)return; try { const response=await fetch('/api/admin/summary'); const result=await readApiResponse(response); if(response.ok)document.querySelector('#adminProfileUserCount').textContent=String(result.summary?.totalUsers || 0); } catch {} }
+		function setAuthenticated(authenticated, user = currentUser){ isAuthenticated=authenticated; currentUser = user || currentUser; authActions.hidden=authenticated; userActions.hidden=!authenticated; authActions.style.display=authenticated?'none':'flex'; userActions.style.display=authenticated?'flex':'none'; document.querySelectorAll('.auth-only').forEach(element=>{ element.hidden=!authenticated; }); const isAdminVisible = authenticated && isAdminUser(currentUser); if (adminButton) { adminButton.hidden = !isAdminVisible; adminButton.style.display = isAdminVisible ? 'inline-flex' : 'none'; } if (userDonationButton) { userDonationButton.hidden = isAdminVisible; userDonationButton.style.display = isAdminVisible ? 'none' : 'inline-flex'; }
+		refreshAdminProfileStats(); render(); if(authenticated){ loginButton.textContent='Profilim'; refreshIndicators(); } else { loginButton.textContent='Giriş yap'; notificationsDot.classList.remove('active'); messagesDot.classList.remove('active'); if (adminButton) { adminButton.hidden = true; adminButton.style.display = 'none'; } } }
+		function getPopoverTrigger(popover, fallbackButton){
+			if (fallbackButton) return fallbackButton;
+			if (!popover) return null;
+			if (popover.id === 'messagesModal') return document.querySelector('#messagesButton, [data-profile-messages]');
+			if (popover.id === 'notificationsModal') return document.querySelector('#notificationsButton, [data-profile-notifications]');
+			return document.querySelector('#notificationsButton, [data-profile-notifications]') || document.querySelector('#messagesButton, [data-profile-messages]');
+		}
+		function togglePopover(popover, triggerButton){ if (!popover) return; const shouldOpen = !popover.classList.contains('open'); document.querySelectorAll('.header-popover').forEach(item => { if (item !== popover) item.classList.remove('open'); }); if (shouldOpen) { popover.classList.add('open'); requestAnimationFrame(() => positionPopover(popover, getPopoverTrigger(popover, triggerButton))); return; } popover.classList.remove('open'); }
+		function positionPopover(popover,button){
+			const anchor = getPopoverTrigger(popover, button);
+			if(!anchor || !popover) return;
+			const rect=anchor.getBoundingClientRect();
+			const width=Math.min(Math.max(popover.offsetWidth || 360, 300), window.innerWidth - 24);
+			const maxLeft=Math.max(12, window.innerWidth - width - 12);
+			const left=Math.min(Math.max(rect.left, 12), maxLeft);
+			const tipOffset = Math.min(Math.max(rect.left + rect.width / 2 - left, 18), width - 18);
+			const top=Math.min(Math.max(rect.bottom + 10, 12), window.innerHeight - (popover.offsetHeight || 220) - 12);
+			popover.style.width=`${width}px`;
+			popover.style.top=`${top}px`;
+			popover.style.left=`${left}px`;
+			popover.style.right='auto';
+			popover.style.setProperty('--tip-offset', `${tipOffset}px`);
+		}
+		window.addEventListener('resize', () => {
+			document.querySelectorAll('.header-popover.open').forEach(popover => positionPopover(popover, getPopoverTrigger(popover, null)));
+		});
+		async function refreshIndicators(){ try { const response=await fetch('/api/notifications'); if(!response.ok)return; const result=await readApiResponse(response); const hasUnread=result.notifications.length>0; notificationsDot.classList.toggle('active',hasUnread); messagesDot.classList.toggle('active',hasUnread); } catch {} }
+		function ratingStars(value){ const rating=Number(value)||0; const full=Math.floor(rating); const half=rating-full>=0.5; return '★'.repeat(full)+(half?'⯨':'')+'☆'.repeat(Math.max(0,5-full-(half?1:0))); }
+		function replaceEmptyRatingMessage(){ document.querySelectorAll('#profileMetaRating, #publicProfileRole').forEach(element=>{ if(element.textContent.includes('Henüz puan yok')) element.textContent=element.textContent.replaceAll('Henüz puan yok','Daha siftah yapmadık :)'); }); }
+		new MutationObserver(replaceEmptyRatingMessage).observe(document.body,{subtree:true,childList:true,characterData:true});
+		function normalizeUserType(userType){ if(userType==='usta'||userType==='Usta / ekip'||userType==='Usta / ekip hesabı') return 'usta'; if(userType==='santiye'||userType==='Şantiye'||userType==='Şantiye hesabı') return 'santiye'; return 'unknown'; }
+		function getAccountTypeLabel(userType){ const normalized=normalizeUserType(userType); if(normalized==='santiye') return 'Şantiye hesabı'; if(normalized==='usta') return 'Usta / ekip hesabı'; return 'Hesap türü belirtilmedi'; }
+		function getAccountTypeBadgeMarkup(userType){ const normalized=normalizeUserType(userType); if(normalized==='santiye') return '<span class="profile-account-badge santiye"><span class="badge-icon">⛑</span></span>'; if(normalized==='usta') return '<span class="profile-account-badge usta"><span class="badge-icon collar">◉</span></span>'; return ''; }
+		function syncProfileLayout(normalizedType){ const addWorkExperienceButton=document.querySelector('#addWorkExperienceButton'); if(addWorkExperienceButton){ addWorkExperienceButton.innerHTML=`<span class="work-icon">🏗️</span><span>İlan ekle</span><span class="work-icon">🧱</span>`; addWorkExperienceButton.dataset.mode='listing'; } }
+		function applyProfileData(user){ if(!user)return; verificationEmail=user.email || verificationEmail; const fullName=`${user.firstName || ''} ${user.lastName || ''}`.trim(); const stars=ratingStars(user.ratingAverage); const profileModalRoot=document.querySelector('#profileModal .modal'); const normalizedType=normalizeUserType(user.userType); profileModalRoot.classList.toggle('profile-layout-santiye',normalizedType==='santiye'); profileModalRoot.classList.toggle('profile-layout-usta',normalizedType==='usta'); syncProfileLayout(normalizedType); document.querySelector('#profileName').textContent=fullName || 'Profil'; document.querySelector('#profileAvatar').innerHTML=user.profilePhoto?`<img src="${user.profilePhoto}" alt="Profil resmi">`:(fullName.split(' ').map(part=>part[0]).join('').slice(0,2).toUpperCase() || 'PT'); document.querySelector('#profileRole').innerHTML=`${getAccountTypeBadgeMarkup(user.userType)}`; document.querySelector('#profileMetaPhone').textContent=`İletişim: ${user.phone || 'Bilgi eklenmedi'}`; document.querySelector('#profileMetaLocation').textContent=`Konum: ${user.province&&user.district?`${user.district}, ${user.province}`:'Bilgi eklenmedi'}`; document.querySelector('#profileMetaExperience').textContent=`Deneyim: ${user.experienceYears?`${user.experienceYears} yıl`:'Belirtilmedi'}`; document.querySelector('#profileMetaRating').textContent=`Ortalama puan: ${user.ratingAverage?stars:'Henüz puan yok'}`; document.querySelector('#profileMetaRating').title=user.ratingAverage?`${Number(user.ratingAverage).toFixed(1).replace('.',',')} / 5`:'Henüz puan yok'; const fillForm=()=>{ const provinceSelect=document.querySelector('#profileForm select[name="province"]'); const districtSelect=document.querySelector('#profileForm select[name="district"]'); if(!provinceSelect||!districtSelect)return; provinceSelect.value=user.province || ''; provinceSelect.dispatchEvent(new Event('change')); districtSelect.value=user.district || ''; profileForm.elements.phone.value=user.phone || ''; profileForm.elements.userType.value=user.userType || ''; profileForm.elements.experienceYears.value=Number.isInteger(user.experienceYears)?user.experienceYears:''; }; queueMicrotask(fillForm); if(user.profileComplete){ profileForm.hidden=true; profileMessage.hidden=true; profileForm.querySelector('button[type="submit"]').textContent='Bilgileri kaydet'; } else { profileForm.hidden=false; profileMessage.hidden=false; } }
+		async function loadCurrentSession(){ try { const response=await fetch('/api/auth/me'); let sessionData=null; if(response.ok){ sessionData=await readApiResponse(response); if(sessionData?.user) { currentUser = sessionData.user; applyProfileData(sessionData.user); } } setAuthenticated(response.ok, sessionData?.user || null); const query=new URLSearchParams(window.location.search); if(query.has('google_error')){ loginMessage.textContent=query.get('google_error'); loginMessage.className='form-message show error'; loginModal.classList.add('open'); history.replaceState({},'',window.location.pathname); } if(response.ok&&query.has('google_success')){ profileModal.classList.add('open'); loadOwnPosts(); history.replaceState({},'',window.location.pathname); } } catch { setAuthenticated(false, null); } }
+
+		function showFormMessage(element,message,type){ element.textContent=message; element.className=`form-message show ${type}`; if(element===verificationMessage&&type==='success'){ emailVerificationModal.classList.remove('open'); profileModal.classList.add('open'); setAuthenticated(true); } if(element===profileMessage&&type==='success'){ const data=new FormData(profileForm); const years=data.get('experienceYears'); document.querySelector('#profileRole').innerHTML=`${getAccountTypeBadgeMarkup(data.get('userType'))}`; document.querySelector('#profileMetaExperience').textContent=`Deneyim: ${years?`${years} yıl`:'Belirtilmedi'}`; document.querySelector('#profileMetaPhone').textContent=`İletişim: ${data.get('phone') || 'Bilgi eklenmedi'}`; document.querySelector('#profileMetaLocation').textContent=`Konum: ${data.get('district') && data.get('province')?`${data.get('district')}, ${data.get('province')}`:'Bilgi eklenmedi'}`; profileForm.hidden=true; profileMessage.hidden=true; profileForm.querySelector('button[type="submit"]').textContent='Bilgileri kaydet'; } }
+		async function loadOwnProfile(){ if(!verificationEmail)return; try { const response=await fetch('/api/auth/me'); const result=await readApiResponse(response); if(response.ok)applyProfileData(result.user); } catch {} }
+		function renderProfileListings(items,container,ownerView=true){ container.innerHTML=items.length?items.map(item=>`<article class="profile-listing"><strong>${item.title}</strong><small>${categoryNames[item.category] || item.category} · ${item.location}</small><p>${item.text}</p><div class="profile-listing-actions">${ownerView?`<button type="button" data-delete-listing="${item.id}">İlanı sil</button>`:`<button type="button" data-profile-listing-message="${item.ownerEmail}" data-profile-listing-title="${item.title}">Mesaj gönder</button>`}</div></article>`).join(''):'<div class="empty-messages">Henüz ilan yok.</div>'; }
+		document.querySelector('#profileListings').addEventListener('click',async event=>{ const deleteButton=event.target.closest('[data-delete-listing]'); if(!deleteButton)return; const listingId=deleteButton.dataset.deleteListing; if(!listingId||!(await requestSiteConfirm('Bu ilanı silmek istediğinize emin misiniz?')))return; deleteButton.disabled=true; try { const response=await fetch(`/api/listings/${encodeURIComponent(listingId)}`,{method:'DELETE'}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message || 'İlan silinemedi.'); await loadOwnPosts(); } catch(error) { alert(error.message || 'İlan silinemedi.'); } finally { deleteButton.disabled=false; } });
+		async function loadOwnPosts(){ if(!verificationEmail)return; try { const response=await fetch(`/api/users/${encodeURIComponent(verificationEmail)}/profile`); const result=await readApiResponse(response); if(response.ok){ renderWorkExperiences(result.profile.workExperiences || [], document.querySelector('#profileWorkExperiences'), true); renderReviews(result.profile.reviews || [],document.querySelector('#profileReviews')); document.querySelector('#profileMetaRating').textContent=`Ortalama puan: ${result.profile.ratingAverage?ratingStars(result.profile.ratingAverage):'Henüz puan yok'}`; const listingResponse=await fetch('/api/listings'); const listingResult=await readApiResponse(listingResponse); if(listingResponse.ok)renderProfileListings((listingResult.listings || []).filter(item=>item.ownerEmail===verificationEmail),document.querySelector('#profileListings'),true); } } catch {} }
+		document.querySelector('[data-close-profile]').addEventListener('click',()=>{ profileModal.classList.remove('open'); if (modal && modal.dataset.context==='profile') { modal.classList.remove('open'); modal.dataset.context=''; } }); profileModal.addEventListener('click',event=>{ if(event.target===profileModal){ profileModal.classList.remove('open'); if (modal && modal.dataset.context==='profile') { modal.classList.remove('open'); modal.dataset.context=''; } } }); document.querySelector('[data-open-profile]').addEventListener('click',event=>{event.preventDefault(); if(isAuthenticated){ profileModal.classList.add('open'); loadOwnProfile(); loadOwnPosts(); }});
+		document.querySelector('[data-edit-profile]').addEventListener('click',()=>{ profileForm.hidden=false; profileMessage.hidden=false; profileMessage.className='form-message'; profileForm.querySelector('button[type="submit"]').textContent='Bilgileri kaydet'; });
+		registrationForm.addEventListener('submit',event=>{ const data=new FormData(registrationForm); const name=`${data.get('firstName') || ''} ${data.get('lastName') || ''}`.trim(); if(name){ document.querySelector('#profileName').textContent=name; document.querySelector('#profileAvatar').textContent=name.split(' ').map(part=>part[0]).join('').slice(0,2).toUpperCase(); } });
+		const profileRatingObserver=new MutationObserver(()=>{ if(profileMessage.classList.contains('success')){ const data=new FormData(profileForm); document.querySelector('#profileMetaPhone').textContent=`İletişim: ${data.get('phone') || 'Bilgi eklenmedi'}`; document.querySelector('#profileMetaLocation').textContent=`Konum: ${data.get('district') && data.get('province')?`${data.get('district')}, ${data.get('province')}`:'Bilgi eklenmedi'}`; } }); profileRatingObserver.observe(profileMessage,{attributes:true,childList:true,characterData:true});
+		const workExperienceForm=document.querySelector('#workExperienceForm'); const workExperienceMessage=document.querySelector('#workExperienceMessage'); const workExperienceFormWrapper=document.querySelector('#workExperienceFormWrapper'); const addWorkExperienceButton=document.querySelector('#addWorkExperienceButton');
+		function resetWorkExperienceForm(){ workExperienceForm.reset(); workExperienceMessage.className='form-message'; workExperienceMessage.textContent=''; workExperienceFormWrapper.hidden=true; }
+		function openProfileListingModal(){ const listingModal=document.querySelector('#modal'); if(!listingModal) return; const profileModal=document.querySelector('#profileModal'); if(profileModal) profileModal.classList.remove('open'); listingModal.dataset.context='profile'; listingModal.classList.add('open'); const firstInput=listingModal.querySelector('input, select, textarea'); if(firstInput){ requestAnimationFrame(()=>firstInput.focus()); } }
+		if (addWorkExperienceButton) {
+			addWorkExperienceButton.dataset.mode='listing';
+			addWorkExperienceButton.addEventListener('click',event=>{ event.preventDefault(); event.stopPropagation(); openProfileListingModal(); });
+		}
+		document.querySelector('[data-cancel-work-experience]')?.addEventListener('click',resetWorkExperienceForm);
+		workExperienceForm?.addEventListener('submit',async event=>{ event.preventDefault(); if(!workExperienceForm.checkValidity()){ workExperienceForm.reportValidity(); return; } const submitButton=workExperienceForm.querySelector('button[type="submit"]'); submitButton.disabled=true; submitButton.textContent='Kaydediliyor...'; try { const file=workExperienceForm.elements.workPhoto.files[0]; const workPhoto=file?await new Promise((resolve,reject)=>{ const reader=new FileReader(); reader.addEventListener('load',()=>resolve(reader.result)); reader.addEventListener('error',reject); reader.readAsDataURL(file); }):''; const response=await fetch('/api/auth/profile/work-experience',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({companyName:workExperienceForm.elements.companyName.value,contactPhone:workExperienceForm.elements.contactPhone.value,address:workExperienceForm.elements.address.value,jobDescription:workExperienceForm.elements.jobDescription.value,workPhoto})}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); workExperienceMessage.textContent='İş kaydı eklendi.'; workExperienceMessage.className='form-message show success'; resetWorkExperienceForm(); await loadOwnPosts(); } catch(error) { workExperienceMessage.textContent=error.message || 'İş kaydı eklenemedi.'; workExperienceMessage.className='form-message show error'; } finally { submitButton.disabled=false; submitButton.textContent='İşi kaydet'; } });
+		profileForm.addEventListener('submit',async event=>{ event.preventDefault(); if(!profileForm.checkValidity()){ profileForm.reportValidity(); return; } const submitButton=profileForm.querySelector('button[type="submit"]'); submitButton.disabled=true; submitButton.textContent='Kaydediliyor...'; const data=Object.fromEntries(new FormData(profileForm)); data.email=verificationEmail; try { const response=await fetch('/api/auth/profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); showFormMessage(profileMessage,result.message,'success'); submitButton.textContent='Profil tamamlandı'; } catch(error) { const message=error instanceof TypeError ? 'Sunucuya bağlanılamadı. Uygulamayı npm start ile başlatıp tekrar deneyin.' : error.message; showFormMessage(profileMessage,message,'error'); submitButton.disabled=false; submitButton.textContent='Profili tamamla'; } });
+		document.querySelector('[data-open-register]').addEventListener('click',()=>{ registrationMessage.className='form-message'; registrationForm.reset(); registerModal.classList.add('open'); });
+		document.querySelector('[data-open-register-from-login]').addEventListener('click',()=>{ loginModal.classList.remove('open'); registrationMessage.className='form-message'; registrationForm.reset(); registerModal.classList.add('open'); });
+		document.querySelector('[data-close-register]').addEventListener('click',()=>registerModal.classList.remove('open')); registerModal.addEventListener('click',event=>{if(event.target===registerModal)registerModal.classList.remove('open')});
+		loginButton.addEventListener('click',async()=>{ const current=await fetch('/api/auth/me'); if(current.ok){ profileModal.classList.add('open'); } else { loginMessage.className='form-message'; loginForm.reset(); loginModal.classList.add('open'); } }); document.querySelector('[data-close-login]').addEventListener('click',()=>loginModal.classList.remove('open')); loginModal.addEventListener('click',event=>{if(event.target===loginModal)loginModal.classList.remove('open')});
+		document.querySelector('[data-close-admin-totp]').addEventListener('click',()=>adminTotpModal.classList.remove('open'));
+		adminTotpModal.addEventListener('click',event=>{ if(event.target===adminTotpModal) adminTotpModal.classList.remove('open'); });
+		loginForm.addEventListener('submit',async event=>{ event.preventDefault(); const submitButton=loginForm.querySelector('button[type="submit"]'); const emailValue = String(loginForm.elements.email.value || '').trim().toLowerCase(); const passwordValue = String(loginForm.elements.password.value || ''); const payload = { email: emailValue, password: passwordValue }; submitButton.disabled=true; try { const response=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); const result=await readApiResponse(response); if(!response.ok){ if(result.requireTotp){ loginMessage.textContent = result.message || 'Admin doğrulaması gerekli.'; loginMessage.className = 'form-message show error'; if (result.qrUrl && result.secret) { adminTotpQr.src = result.qrUrl; adminTotpSecret.textContent = result.secret; pendingAdminLogin = { email: emailValue }; loginModal.classList.remove('open'); adminTotpModal.classList.add('open'); } else { await openAdminTotpPrompt(emailValue); } return; } throw new Error(result.message || 'Giriş başarısız oldu.'); } verificationEmail=emailValue; const loggedInUser = { email: result.email || verificationEmail, firstName: result.name ? result.name.split(' ')[0] || 'Admin' : 'Admin', lastName: result.name ? result.name.split(' ').slice(1).join(' ') || '' : '', userType: result.admin ? 'admin' : 'usta', admin: Boolean(result.admin) }; currentUser = loggedInUser; setAuthenticated(true, loggedInUser); loginForm.reset(); loginModal.classList.remove('open'); profileModal.classList.add('open'); await loadOwnProfile(); loadOwnPosts(); } catch(error) { showFormMessage(loginMessage,error.message,'error'); } finally { submitButton.disabled=false; } });
+		adminTotpForm.addEventListener('submit',async event=>{ event.preventDefault(); if(!pendingAdminLogin){ adminTotpMessage.textContent='Önce admin girişi yapın.'; adminTotpMessage.className='form-message show error'; return; } const code = String(adminTotpForm.elements.authCode.value || '').trim(); if(!/^\d{6}$/.test(code)){ adminTotpMessage.textContent='Google Authenticator kodu 6 haneli olmalıdır.'; adminTotpMessage.className='form-message show error'; return; } const submitButton=adminTotpForm.querySelector('button[type="submit"]'); submitButton.disabled=true; try { const response=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ email: pendingAdminLogin.email, password: loginForm.elements.password.value, authCode: code })}); const result=await readApiResponse(response); if(!response.ok) throw new Error(result.message || 'Google Authenticator doğrulaması başarısız oldu.'); verificationEmail=pendingAdminLogin.email; const loggedInUser = { email: result.email || verificationEmail, firstName: result.name ? result.name.split(' ')[0] || 'Admin' : 'Admin', lastName: result.name ? result.name.split(' ').slice(1).join(' ') || '' : '', userType: 'admin', admin: true }; currentUser = loggedInUser; setAuthenticated(true, loggedInUser); adminTotpModal.classList.remove('open'); loginForm.reset(); adminTotpForm.reset(); profileModal.classList.add('open'); await loadOwnProfile(); loadOwnPosts(); } catch(error) { adminTotpMessage.textContent = error.message || 'Doğrulama başarısız oldu.'; adminTotpMessage.className='form-message show error'; } finally { submitButton.disabled=false; } });
+		document.querySelector('#profileButton').addEventListener('click',()=>{ profileModal.classList.add('open'); refreshAdminProfileStats(); loadOwnProfile(); loadOwnPosts(); });
+		document.querySelector('[data-profile-notifications]').addEventListener('click',event=>{ event.preventDefault(); event.stopPropagation(); togglePopover(notificationsModal, event.currentTarget); if (notificationsModal.classList.contains('open')) openNotifications(); }); document.querySelector('[data-profile-messages]').addEventListener('click',event=>{ event.preventDefault(); event.stopPropagation(); togglePopover(messagesModal, event.currentTarget); if (messagesModal.classList.contains('open')) openMessages(); }); document.querySelector('[data-profile-home]').addEventListener('click',()=>profileModal.classList.remove('open')); document.querySelector('[data-profile-logout]').addEventListener('click',()=>document.querySelector('#logoutButton').click());
+		async function submitPost(event){ event.preventDefault(); const form=event.currentTarget; const message=document.querySelector('#postMessage'); const submitButton=form.querySelector('button[type="submit"]'); if(!form.checkValidity()){ form.reportValidity(); return; } submitButton.disabled=true; try { const file=form.elements.image.files[0]; const image=file?await new Promise((resolve,reject)=>{ const reader=new FileReader(); reader.addEventListener('load',()=>resolve(reader.result)); reader.addEventListener('error',reject); reader.readAsDataURL(file); }):''; const response=await fetch('/api/posts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({description:form.elements.description.value,image})}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); form.reset(); message.textContent='Gönderin paylaşıldı.'; message.className='form-message show success'; loadOwnPosts(); } catch(error) { message.textContent=error.message || 'Gönderi paylaşılamadı.'; message.className='form-message show error'; } finally { submitButton.disabled=false; } }
+		async function handlePostAction(event){ const editPost=event.target.closest('[data-edit-post]'); const deletePost=event.target.closest('[data-delete-post]'); const editComment=event.target.closest('[data-edit-comment]'); const deleteComment=event.target.closest('[data-delete-comment]'); const likeButton=event.target.closest('[data-like-post]'); const authorTarget=event.target.closest('[data-post-owner],[data-comment-author]'); if(editPost){ const card=editPost.closest('.post-card'); const description=window.prompt('Gönderi açıklamasını düzenle',card.querySelector('p').textContent); if(description!==null){ await fetch(`/api/posts/${editPost.dataset.editPost}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({description})}); loadOwnPosts(); } return; } if(deletePost&&window.confirm('Bu gönderi silinsin mi?')){ await fetch(`/api/posts/${deletePost.dataset.deletePost}`,{method:'DELETE'}); loadOwnPosts(); return; } if(editComment){ const [postId,commentId]=editComment.dataset.editComment.split(':'); const current=editComment.closest('.comment-item').textContent.replace(/Düzenle|Sil/g,'').trim(); const text=window.prompt('Yorumu düzenle',current); if(text!==null){ await fetch(`/api/posts/${postId}/comments/${commentId}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})}); loadOwnPosts(); } return; } if(deleteComment&&window.confirm('Bu yorum silinsin mi?')){ const [postId,commentId]=deleteComment.dataset.deleteComment.split(':'); await fetch(`/api/posts/${postId}/comments/${commentId}`,{method:'DELETE'}); loadOwnPosts(); return; } if(authorTarget){ event.preventDefault(); publicProfileModal.classList.remove('open'); openPublicProfile(authorTarget.dataset.postOwner || authorTarget.dataset.commentAuthor); return; } if(likeButton){ if(!isAuthenticated){ loginModal.classList.add('open'); return; } const response=await fetch(`/api/posts/${likeButton.dataset.likePost}/like`,{method:'POST'}); if(response.ok){ loadOwnPosts(); if(publicProfileModal.classList.contains('open'))openPublicProfile(publicProfileEmail); } return; } const commentForm=event.target.closest('[data-comment-form]'); if(commentForm){ event.preventDefault(); if(!isAuthenticated){ loginModal.classList.add('open'); return; } const response=await fetch(`/api/posts/${commentForm.dataset.commentForm}/comments`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:commentForm.elements.text.value})}); if(response.ok){ commentForm.reset(); loadOwnPosts(); if(publicProfileModal.classList.contains('open'))openPublicProfile(publicProfileEmail); } } }
+		document.querySelector('#publicProfilePosts').addEventListener('click',handlePostAction); document.querySelector('#publicProfilePosts').addEventListener('submit',handlePostAction); const profileReviewsContainer=document.querySelector('#profileReviews'); if(profileReviewsContainer){ profileReviewsContainer.addEventListener('click',async event=>{ const edit=event.target.closest('[data-edit-review]'); const remove=event.target.closest('[data-delete-review]'); if(edit){ const card=edit.closest('.review-card'); const text=window.prompt('Müşteri yorumunu düzenle',card.querySelector('p').textContent); const rating=Number(window.prompt('Puan (1-5)',card.querySelector('.review-stars').textContent.length)); if(text&&rating){ await fetch(`/api/reviews/${edit.dataset.editReview}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,rating})}); loadOwnPosts(); } } if(remove&&window.confirm('Bu müşteri yorumu silinsin mi?')){ await fetch(`/api/reviews/${remove.dataset.deleteReview}`,{method:'DELETE'}); loadOwnPosts(); } }); } const profileWorkExperiencesContainer=document.querySelector('#profileWorkExperiences'); if(profileWorkExperiencesContainer){ profileWorkExperiencesContainer.addEventListener('click',async event=>{ const deleteButton=event.target.closest('[data-delete-work]'); if(!deleteButton) return; const workId=deleteButton.dataset.deleteWork; if(!workId) return; const confirmed=window.confirm('Bu işi silmek istediğinize emin misiniz?'); if(!confirmed) return; try { const response=await fetch(`/api/auth/profile/work-experience/${encodeURIComponent(workId)}`,{method:'DELETE'}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message || 'İş silinemedi.'); await loadOwnPosts(); } catch(error){ alert(error.message || 'İş silinemedi.'); } }); } document.querySelector('#reviewForm').addEventListener('submit',async event=>{ event.preventDefault(); if(!publicProfileEmail)return; const form=event.currentTarget; const response=await fetch(`/api/users/${encodeURIComponent(publicProfileEmail)}/reviews`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rating:form.elements.rating.value,text:form.elements.text.value})}); const result=await readApiResponse(response); if(!response.ok){ alert(result.message); return; } form.reset(); openPublicProfile(publicProfileEmail); }); document.querySelector('#profileListings').addEventListener('click',event=>{ const button=event.target.closest('[data-profile-listing-message]'); if(!button)return; openChat({ dataset:{ownerEmail:button.dataset.profileListingMessage}, querySelector:selector=>selector==='h3'?{textContent:button.dataset.profileListingTitle}:selector==='.person strong'?{childNodes:[{textContent:document.querySelector('#publicProfileName').textContent}]}:null }); }); document.querySelector('#publicProfileListings').addEventListener('click',event=>{ const button=event.target.closest('[data-profile-listing-message]'); if(!button)return; publicProfileModal.classList.remove('open'); openChat({ dataset:{ownerEmail:button.dataset.profileListingMessage}, querySelector:selector=>selector==='h3'?{textContent:button.dataset.profileListingTitle}:selector==='.person strong'?{childNodes:[{textContent:document.querySelector('#publicProfileName').textContent}]}:null }); });
+		document.querySelector('#logoutButton').addEventListener('click',async()=>{ if(!window.confirm('Çıkış yapmak istediğinizden emin misiniz?'))return; const button=document.querySelector('#logoutButton'); button.disabled=true; try { const response=await fetch('/api/auth/logout',{method:'POST'}); if(!response.ok)throw new Error('Oturum kapatılamadı.'); setAuthenticated(false); messagesModal.classList.remove('open'); notificationsModal.classList.remove('open'); profileModal.classList.remove('open'); loginForm.reset(); loginMessage.className='form-message'; loginModal.classList.add('open'); } catch(error) { alert(error.message || 'Oturum kapatılamadı.'); } finally { button.disabled=false; } });
+		const logoutButtonForSiteConfirm=document.querySelector('#logoutButton'); if(logoutButtonForSiteConfirm){ const cleanLogoutButton=logoutButtonForSiteConfirm.cloneNode(true); logoutButtonForSiteConfirm.replaceWith(cleanLogoutButton); cleanLogoutButton.addEventListener('click',async()=>{ if(!await requestSiteConfirm('Çıkış yapmak istediğinizden emin misiniz?'))return; cleanLogoutButton.disabled=true; try { const response=await fetch('/api/auth/logout',{method:'POST'}); if(!response.ok)throw new Error('Oturum kapatılamadı.'); setAuthenticated(false); messagesModal.classList.remove('open'); notificationsModal.classList.remove('open'); profileModal.classList.remove('open'); loginForm.reset(); loginMessage.className='form-message'; loginModal.classList.add('open'); } catch(error) { showToast(error.message || 'Oturum kapatılamadı.','error'); } finally { cleanLogoutButton.disabled=false; } }); }
+		document.addEventListener('click',async event=>{ const deletePost=event.target.closest('[data-delete-post]'); const deleteReview=event.target.closest('[data-delete-review]'); const deleteWork=event.target.closest('[data-delete-work]'); if(deletePost||deleteReview||deleteWork){ event.preventDefault(); event.stopImmediatePropagation(); const message=deletePost?'Bu gönderi silinsin mi?':deleteReview?'Bu müşteri yorumu silinsin mi?':'Bu işi silmek istediğinize emin misiniz?'; if(!await requestSiteConfirm(message))return; try { let response; if(deletePost) response=await fetch(`/api/posts/${encodeURIComponent(deletePost.dataset.deletePost)}`,{method:'DELETE'}); else if(deleteReview) response=await fetch(`/api/reviews/${encodeURIComponent(deleteReview.dataset.deleteReview)}`,{method:'DELETE'}); else response=await fetch(`/api/auth/profile/work-experience/${encodeURIComponent(deleteWork.dataset.deleteWork)}`,{method:'DELETE'}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message || 'Silme işlemi tamamlanamadı.'); loadOwnPosts(); } catch(error) { showToast(error.message || 'Silme işlemi tamamlanamadı.','error'); } } },true);
+		async function openMessages(){
+			const profileMessagesButton = document.querySelector('#messagesButton') || document.querySelector('[data-profile-messages]');
+			positionPopover(messagesModal, profileMessagesButton);
+			messageList.innerHTML='<div class="empty-messages">Mesajlar yükleniyor...</div>'; messagesModal.classList.add('open');
+			try { const response=await fetch('/api/messages/summary'); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); messageList.innerHTML=''; if(!result.conversations.length){ messageList.innerHTML='<div class="empty-messages">Henüz mesajın yok.</div>'; return; } result.conversations.forEach(conversation=>{ const thread=document.createElement('div'); thread.className='message-thread'; const initials=conversation.name.split(' ').map(part=>part[0]).join('').slice(0,2).toUpperCase(); thread.innerHTML=`<span class="avatar">${initials}</span><button type="button" class="message-thread-open"><strong></strong><small></small></button><time>${new Date(conversation.createdAt).toLocaleDateString('tr-TR')}</time><button type="button" class="message-thread-delete" title="Sohbeti sil" aria-label="Sohbeti sil">Sohbeti sil</button>`; thread.querySelector('strong').textContent=conversation.name; thread.querySelector('small').textContent=conversation.text; thread.querySelector('.message-thread-open').addEventListener('click',()=>{ messagesModal.classList.remove('open'); openChat({ dataset:{ownerEmail:conversation.email}, querySelector:selector=>selector==='.person strong'?{childNodes:[{textContent:conversation.name}]}:{textContent:'Mesajlaşma'} }); }); thread.querySelector('.message-thread-delete').addEventListener('click',async event=>{ event.preventDefault(); event.stopPropagation(); const deleteButton=event.currentTarget; if(!await requestSiteConfirm('Bu sohbeti ve içindeki tüm mesajları silmek istediğinize emin misiniz?'))return; deleteButton.disabled=true; try { const deleteResponse=await fetch(`/api/messages/conversation/${encodeURIComponent(conversation.email)}`,{method:'DELETE'}); const deleteResult=await readApiResponse(deleteResponse); if(!deleteResponse.ok)throw new Error(deleteResult.message || 'Sohbet silinemedi.'); thread.remove(); if(!messageList.querySelector('.message-thread'))messageList.innerHTML='<div class="empty-messages">Henüz mesajın yok.</div>'; } catch(error) { showToast(error.message || 'Sohbet silinemedi.','error'); deleteButton.disabled=false; } }); messageList.appendChild(thread); }); } catch(error) { messageList.innerHTML=`<div class="empty-messages">${error.message || 'Mesajlar yüklenemedi.'}</div>`; } }
+		async function openNotifications(){
+			const profileNotificationsButton = document.querySelector('[data-profile-notifications]') || document.querySelector('#notificationsButton');
+			positionPopover(notificationsModal, profileNotificationsButton);
+			notificationList.innerHTML='<div class="empty-messages">Bildirimler yükleniyor...</div>'; notificationsModal.classList.add('open');
+			try { const response=await fetch('/api/notifications'); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); notificationList.innerHTML=''; if(!result.notifications.length){ notificationList.innerHTML='<div class="empty-messages">Yeni bildirimin yok.</div>'; } else { result.notifications.forEach(notification=>{ const item=document.createElement('button'); item.type='button'; item.className='notification-item'; item.innerHTML='<strong></strong><small></small>'; item.querySelector('strong').textContent=notification.senderName; item.querySelector('small').textContent=notification.text; item.addEventListener('click',()=>{ notificationsModal.classList.remove('open'); if(notification.type==='like'||notification.type==='comment')openPublicProfile(notification.senderEmail); else openChat({ dataset:{ownerEmail:notification.senderEmail}, querySelector:selector=>selector==='.person strong'?{childNodes:[{textContent:notification.senderName}]}:{textContent:'Mesajlaşma'} }); }); notificationList.appendChild(item); }); } await fetch('/api/notifications/read',{method:'POST'}); notificationsDot.classList.remove('active'); messagesDot.classList.remove('active'); } catch(error) { notificationList.innerHTML=`<div class="empty-messages">${error.message || 'Bildirimler yüklenemedi.'}</div>`; } }
+		document.querySelector('#messagesButton')?.addEventListener('click',event=>{ event.preventDefault(); event.stopPropagation(); togglePopover(messagesModal, event.currentTarget); if (messagesModal.classList.contains('open')) openMessages(); }); document.querySelector('#notificationsButton')?.addEventListener('click',event=>{ event.preventDefault(); event.stopPropagation(); togglePopover(notificationsModal, event.currentTarget); if (notificationsModal.classList.contains('open')) openNotifications(); }); document.querySelector('[data-close-messages]')?.addEventListener('click',()=>messagesModal && messagesModal.classList.remove('open')); document.querySelector('[data-close-notifications]')?.addEventListener('click',()=>notificationsModal && notificationsModal.classList.remove('open')); document.addEventListener('click',event=>{ const clickedToggle = event.target.closest('#messagesButton, #notificationsButton, [data-profile-messages], [data-profile-notifications]'); const clickedInsidePopover = event.target.closest('.header-popover'); if (clickedInsidePopover || clickedToggle) return; if (messagesModal) messagesModal.classList.remove('open'); if (notificationsModal) notificationsModal.classList.remove('open'); });
+		document.querySelector('[data-close-email-verification]')?.addEventListener('click',()=>emailVerificationModal && emailVerificationModal.classList.remove('open')); emailVerificationModal?.addEventListener('click',event=>{if(event.target===emailVerificationModal)emailVerificationModal.classList.remove('open')});
+		document.querySelector('[data-toggle-password]')?.addEventListener('click',event=>{ const passwordInput=registrationForm.elements.password; const visible=passwordInput.type==='text'; passwordInput.type=visible?'password':'text'; event.currentTarget.textContent=visible?'Göster':'Gizle'; });
+		registrationForm.addEventListener('submit',async event=>{ event.preventDefault(); if(!registrationForm.checkValidity()){ registrationForm.reportValidity(); return; } const submitButton=registrationForm.querySelector('button[type="submit"]'); submitButton.disabled=true; submitButton.textContent='Kaydediliyor...'; const data=Object.fromEntries(new FormData(registrationForm)); try { const response=await fetch('/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); verificationEmail=result.email || data.email; setAuthenticated(true); registerModal.classList.remove('open'); profileModal.classList.add('open'); await loadOwnProfile(); loadOwnPosts(); registrationMessage.textContent=result.message || 'Hesabınız oluşturuldu.'; registrationMessage.className='form-message show success'; } catch(error) { showFormMessage(registrationMessage,error.message || 'Kayıt sırasında bir hata oluştu.','error'); } finally { submitButton.disabled=false; submitButton.textContent='Kayıt ol'; } });
+		syncAdminAuthenticatorUI();
+		emailVerificationForm.addEventListener('submit',async event=>{ event.preventDefault(); if(!emailVerificationForm.checkValidity()){ emailVerificationForm.reportValidity(); return; } const submitButton=emailVerificationForm.querySelector('button[type="submit"]'); submitButton.disabled=true; submitButton.textContent='Kontrol ediliyor...'; try { const response=await fetch('/api/auth/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:verificationEmail,code:emailVerificationForm.elements.code.value})}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); showFormMessage(verificationMessage,result.message,'success'); submitButton.textContent='Kayıt tamamlandı'; } catch(error) { showFormMessage(verificationMessage,error.message,'error'); submitButton.disabled=false; submitButton.textContent='Kodu doğrula'; } });
+		const adminDashboardModal = document.body.insertAdjacentHTML('beforeend', '<div class="modal-backdrop" id="adminDashboardModal"><div class="modal" style="max-width:860px; width:min(100%,860px);"><div class="modal-head"><h2>Admin paneli</h2><button class="close" type="button" data-close-admin>×</button></div><div class="profile-grid" style="grid-template-columns:1fr 1fr; margin-top:0;"><div class="profile-card"><h3>Özet</h3><div class="profile-stats"><div class="profile-stat"><strong id="adminTotalUsers">0</strong><span>Kullanıcı</span></div><div class="profile-stat"><strong id="adminListingCount">0</strong><span>İlan</span></div><div class="profile-stat"><strong id="adminAnnouncementCount">0</strong><span>Duyuru</span></div></div></div><div class="profile-card"><h3>Geri bildirim</h3><div class="profile-stat" style="margin-bottom:8px;"><strong id="adminFeedbackCount">0</strong><span>Toplam geri bildirim</span></div><div class="profile-stat"><strong id="adminTodayLabel">-</strong><span>Durum</span></div></div></div><div class="profile-grid" style="margin-top:18px; grid-template-columns:1.2fr 0.8fr;"><div class="profile-card"><h3>Duyuru paylaş</h3><form id="announcementForm" class="form-grid"><label>Başlık<input name="title" maxlength="120" placeholder="Duyuru başlığı" required></label><label>Metin<textarea name="text" maxlength="1500" rows="4" placeholder="Duyuru metnini yaz" required></textarea></label><label>Öncelik<select name="priority"><option value="normal">Normal</option><option value="important">Önemli</option><option value="alert">Uyarı</option></select></label><p id="announcementMessage" class="form-message" role="alert"></p><button class="primary" type="submit">Duyuruyu yayınla</button></form></div><div class="profile-card"><h3>Google Authenticator</h3><button id="resetAdminTotpButton" class="ghost" type="button" style="margin-bottom:12px;">Doğrulamayı sıfırla</button><div id="adminFeedbackList" class="profile-list"></div></div></div></div></div>');
+		const adminDashboard = document.querySelector('#adminDashboardModal'); const announcementForm = document.querySelector('#announcementForm'); const announcementMessage = document.querySelector('#announcementMessage');
+		adminDashboard.addEventListener('click', event => { if (event.target.closest('[data-open-admin-announcements]')) renderAdminAnnouncements(); });
+		adminDashboard.querySelector('.profile-card:has(#announcementForm)').insertAdjacentHTML('afterend','<div class="profile-card admin-announcement-card"><h3>Yayınlanan duyurular</h3><div id="adminAnnouncementList" class="profile-list"></div></div>');
+		const adminAnnouncementList=document.querySelector('#adminAnnouncementList');
+		async function renderAdminAnnouncements(){ if(!adminAnnouncementList)return; adminAnnouncementList.innerHTML='<div class="empty-messages">Duyurular yükleniyor...</div>'; try { const response=await fetch(`/api/announcements?adminTs=${Date.now()}`,{cache:'no-store'}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); const items=result.announcements||[]; adminAnnouncementList.innerHTML=items.length?items.map(item=>`<article class="admin-announcement-item" data-admin-announcement-id="${item.id}"><div><strong>${item.title}</strong><small>${new Date(item.createdAt).toLocaleDateString('tr-TR')} · ${item.priority || 'normal'}</small><p>${item.text}</p></div><button class="ghost" type="button" data-admin-delete-announcement="${item.id}">Duyuruyu sil</button></article>`).join(''):'<div class="empty-messages">Yayınlanmış duyuru yok.</div>'; } catch(error) { adminAnnouncementList.innerHTML=`<div class="empty-messages">${error.message || 'Duyurular yüklenemedi.'}</div>`; } }
+		adminAnnouncementList?.addEventListener('click',async event=>{ const button=event.target.closest('[data-admin-delete-announcement]'); if(!button||!(await requestSiteConfirm('Bu duyuruyu silmek istediğinize emin misiniz?')))return; button.disabled=true; try { const response=await fetch(`/api/admin/announcements/${encodeURIComponent(button.dataset.adminDeleteAnnouncement)}`,{method:'DELETE'}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message||'Duyuru silinemedi.'); await renderAdminAnnouncements(); renderAnnouncements(); openAdminPanel(); } catch(error) { showToast(error.message||'Duyuru silinemedi.','error'); button.disabled=false; } });
+	
+document.querySelector('#resetAdminTotpButton')?.addEventListener('click', async () => {
+			const email = window.prompt('Admin e-posta adresini yazın');
+			if (!email) return;
+			const password = window.prompt('Admin şifresini yazın');
+			if (!password) return;
+			try {
+				const response = await fetch('/api/admin/totp/reset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+				const result = await readApiResponse(response);
+				if (!response.ok) throw new Error(result.message || 'Doğrulama sıfırlanamadı.');
+				adminTotpQr.src = result.qrUrl || '';
+				adminTotpSecret.textContent = result.secret || '-';
+				adminTotpMessage.textContent = 'Yeni Google Authenticator anahtarı oluşturuldu. QR kodu ve gizli anahtar sadece bu sefer gösterilir.';
+				adminTotpMessage.className = 'form-message show success';
+				adminTotpModal.classList.add('open');
+				window.alert('Yeni Google Authenticator anahtarı üretildi. QR kodu ve gizli anahtar sadece bu kez gösterilecek.');
+			} catch (error) {
+				window.alert(error.message || 'Doğrulama sıfırlanamadı.');
+			}
+		});
+		function renderAnnouncements(){ const list = document.querySelector('#announcementList'); if (!list) return; fetch(`/api/announcements?ts=${Date.now()}`, { cache:'no-store' }).then(async response => { if (!response.ok) return; const result = await readApiResponse(response); const isAdmin = Boolean(currentUser && isAdminUser(currentUser)); const items = result.announcements || []; window.__announcementData = items; if (!items.length) { list.innerHTML = '<div class="empty" style="display:block;">Henüz duyuru paylaşılmadı.</div>'; return; } list.innerHTML = `<div class="announcement-rail">${items.map(item => `
+			<article class="announcement-item" data-announcement-id="${item.id}">
+				<button class="announcement-header" type="button" data-announcement-toggle="${item.id}">
+					<div>
+						<strong>${item.title}</strong>
+						<small>${new Date(item.createdAt).toLocaleDateString('tr-TR')} · ${item.author || 'Admin'}</small>
+					</div>
+					<span class="announcement-tag">Duyuru</span>
+				</button>
+				<div class="announcement-body">
+					<p>${item.text}</p>
+					${isAdmin ? `<div class="listing-foot" style="margin-top:12px;padding-top:12px; border-top:1px solid #edf0eb;"><button type="button" class="ghost" data-delete-announcement="${item.id}">Duyuruyu sil</button></div>` : ''}
+				</div>
+			</article>
+		`).join('')}</div>`; const rail = list.querySelector('.announcement-rail'); if (rail) { requestAnimationFrame(() => { rail.scrollTo({ left: rail.scrollWidth, behavior: 'smooth' }); }); } list.querySelectorAll('[data-announcement-toggle]').forEach(button => { button.addEventListener('click', () => { const itemId = button.dataset.announcementToggle; const detail = (window.__announcementData || []).find(entry => String(entry.id) === String(itemId)); if (detail) { openAnnouncementDetail(detail); } }); }); }).catch(() => { list.innerHTML = '<div class="empty" style="display:block;">Duyurular yüklenemedi.</div>'; }); }
+		const announcementDetailModal = document.querySelector('#announcementDetailModal');
+		const announcementDetailTitle = document.querySelector('#announcementDetailTitle');
+		const announcementDetailText = document.querySelector('#announcementDetailText');
+		function openAnnouncementDetail(item) {
+			if (!announcementDetailModal || !item) return;
+			announcementDetailTitle.textContent = item.title || 'Duyuru';
+			announcementDetailText.textContent = item.text || ''; 
+			announcementDetailModal.classList.add('open');
+		}
+		function closeAnnouncementDetail() {
+			if (announcementDetailModal) announcementDetailModal.classList.remove('open');
+		}
+		document.querySelector('[data-close-announcement-detail]')?.addEventListener('click', closeAnnouncementDetail);
+		announcementDetailModal?.addEventListener('click', event => { if (event.target === announcementDetailModal) closeAnnouncementDetail(); });
+		const announcementList = document.querySelector('#announcementList');
+		announcementList?.addEventListener('click', async event => {
+			const deleteButton = event.target.closest('[data-delete-announcement]');
+			if (deleteButton) {
+				showConfirmToast('Duyuruyu silmek istediğinize emin misiniz?', async () => {
+					try {
+						const response = await fetch(`/api/admin/announcements/${encodeURIComponent(deleteButton.dataset.deleteAnnouncement)}`, { method: 'DELETE' });
+						const result = await readApiResponse(response);
+						if (!response.ok) throw new Error(result.message || 'Duyuru silinemedi.');
+						window.__announcementData = (window.__announcementData || []).filter(item => String(item.id) !== String(deleteButton.dataset.deleteAnnouncement));
+						deleteButton.closest('.announcement-item')?.remove();
+						showToast('Duyuru silindi.', 'success');
+						renderAnnouncements();
+					} catch (error) {
+						showToast(error.message || 'Duyuru silinemedi.', 'error');
+					}
+				});
+				return;
+			}
+			const toggleButton = event.target.closest('[data-announcement-toggle]');
+			if (!toggleButton) return;
+			const itemId = toggleButton.dataset.announcementToggle;
+			const detail = (window.__announcementData || []).find(entry => String(entry.id) === String(itemId));
+			if (detail) openAnnouncementDetail(detail);
+		});
+		window.__announcementData = [];
+		async function openAdminPanel(){ if (!adminDashboard) return; try { const response = await fetch('/api/admin/summary'); const result = await readApiResponse(response); if (!response.ok) throw new Error(result.message || 'Admin verisi alınamadı.'); const summary = result.summary || {}; document.querySelector('#adminTotalUsers').textContent = summary.totalUsers || 0; document.querySelector('#adminListingCount').textContent = summary.activeListings || 0; document.querySelector('#adminAnnouncementCount').textContent = summary.totalAnnouncements || 0; document.querySelector('#adminFeedbackCount').textContent = summary.totalFeedback || 0; document.querySelector('#adminTodayLabel').textContent = `${(summary.recentFeedback || []).length} yeni`; const feedbackList = document.querySelector('#adminFeedbackList'); feedbackList.innerHTML = (summary.recentFeedback || []).slice(0, 5).map(item => `<article class="profile-job"><strong>${item.author}</strong><small>${new Date(item.createdAt).toLocaleDateString('tr-TR')}</small><p>${item.text}</p></article>`).join('') || '<div class="empty-messages">Henüz geri bildirim yok.</div>'; adminDashboard.classList.add('open'); } catch (error) { alert(error.message || 'Admin paneli açılamadı.'); } }
+		document.querySelector('[data-close-admin]').addEventListener('click',()=>adminDashboard.classList.remove('open')); adminDashboard.addEventListener('click',event=>{ if(event.target===adminDashboard) adminDashboard.classList.remove('open'); }); document.querySelector('#adminButton').addEventListener('click', async()=>{ await renderAdminAnnouncements(); openAdminPanel(); });
+		announcementForm.addEventListener('submit', async event => { event.preventDefault(); const submitButton = announcementForm.querySelector('button[type="submit"]'); submitButton.disabled = true; try { const payload = Object.fromEntries(new FormData(announcementForm)); const response = await fetch('/api/admin/announcements', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); const result = await readApiResponse(response); if (!response.ok) throw new Error(result.message || 'Duyuru yayınlanamadı.'); announcementMessage.textContent = 'Duyuru yayınlandı.'; announcementMessage.className = 'form-message show success'; announcementForm.reset(); renderAnnouncements(); openAdminPanel(); } catch (error) { announcementMessage.textContent = error.message || 'Duyuru paylaşılırken hata oluştu.'; announcementMessage.className = 'form-message show error'; } finally { submitButton.disabled = false; } });
+		const modal=document.querySelector('#modal'); function openListingModalInContext(context='default'){ if(!modal) return; if(context==='profile'){ const profileModal=document.querySelector('#profileModal'); if(profileModal) profileModal.classList.remove('open'); } modal.dataset.context=context; modal.classList.add('open'); const firstInput=modal.querySelector('input, select, textarea'); if(firstInput){ requestAnimationFrame(()=>firstInput.focus()); } }
+		document.querySelectorAll('[data-open-modal]').forEach(button=>button.addEventListener('click',()=>{ if(!isAuthenticated){ showToast('İlan oluşturmak için önce giriş yapın.', 'info'); loginForm.reset(); loginMessage.className='form-message'; loginModal.classList.add('open'); return; } openListingModalInContext(); })); document.querySelector('[data-close-modal]').addEventListener('click',()=>{ modal.classList.remove('open'); modal.dataset.context=''; }); modal.addEventListener('click',event=>{if(event.target===modal){ modal.classList.remove('open'); modal.dataset.context=''; }});
+		renderAnnouncements();
+		const donationModal=document.querySelector('#donationModal');
+		const donationAccountContainer=document.querySelector('#donationAccounts');
+		const donationAccountName=document.querySelector('#donationAccountName');
+		if (donationModal) {
+			donationModal.addEventListener('click', event => {
+				if (event.target === donationModal) closeDonationPopup();
+			});
+		}
+		const donationTriggerSelector='[data-donation-open], [data-open-donation]';
+		async function renderDonationConfig(){
+			if (!donationAccountContainer) return;
+			try {
+				const response = await fetch('/api/donation/config');
+				const result = await readApiResponse(response);
+				if (!response.ok) throw new Error(result.message || 'Bağış bilgileri alınamadı.');
+				const payload = result.data;
+				if (!payload || !payload.accountName || !Array.isArray(payload.banks) || !payload.banks.length) {
+					throw new Error('Bağış bilgileri eksik veya güvenli biçimde gelmedi.');
+				}
+				donationAccountContainer.innerHTML = payload.banks.map(item => `
+						<div class="account-row"><strong>${item.iban}</strong><span>${item.bank}</span></div>
+					`).join('');
+				if (donationAccountName) donationAccountName.textContent = payload.accountName || 'SÜLEYMAN KOTUMAR';
+			} catch (error) {
+				donationAccountContainer.innerHTML = '<div class="account-row"><strong>Bağış bilgileri mevcut değil.</strong><span>Güvenlik</span></div>';
+				if (donationAccountName) donationAccountName.textContent = 'SÜLEYMAN KOTUMAR';
+				console.error(error);
+			}
+		}
+		function openDonationPopup(){
+			if (!donationModal) return;
+			donationModal.classList.add('open');
+			document.body.style.overflow='hidden';
+			const closeButton=donationModal.querySelector('[data-close-donation]');
+			if (closeButton) closeButton.focus();
+		}
+		function closeDonationPopup(){
+			if (!donationModal) return;
+			donationModal.classList.remove('open');
+			document.body.style.overflow='';
+		}
+		document.querySelectorAll(donationTriggerSelector).forEach(button => {
+			button.addEventListener('click', event => {
+				event.preventDefault();
+				event.stopPropagation();
+				openDonationPopup();
+			});
+		});
+		renderDonationConfig();
+		const donationCloseButton = donationModal ? donationModal.querySelector('[data-close-donation]') : null;
+		if (donationCloseButton) {
+			donationCloseButton.addEventListener('click', event => {
+				event.stopPropagation();
+				closeDonationPopup();
+			});
+		}
+		const donationHomeButton = document.querySelector('[data-donation-home]');
+		if (donationHomeButton) {
+			donationHomeButton.addEventListener('click', () => {
+				closeDonationPopup();
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+		}
+		const supportNavLink = document.querySelector('a[href="#destek"]');
+		if (supportNavLink) {
+			supportNavLink.addEventListener('click', event => {
+				event.preventDefault();
+				event.stopPropagation();
+				openDonationPopup();
+			});
+		}
+		const donationProfileButton = document.querySelector('[data-donation-profile]');
+		if (donationProfileButton) {
+			donationProfileButton.addEventListener('click', () => {
+				closeDonationPopup();
+				if (window.profileModal) {
+					window.profileModal.classList.add('open');
+				}
+			});
+		}
+		const donationMessagesButton = document.querySelector('[data-donation-messages]');
+		if (donationMessagesButton) {
+			donationMessagesButton.addEventListener('click', () => {
+				closeDonationPopup();
+				if (window.messagesModal) {
+					window.messagesModal.classList.add('open');
+				}
+			});
+		}
+		const donationNotificationsButton = document.querySelector('[data-donation-notifications]');
+		if (donationNotificationsButton) {
+			donationNotificationsButton.addEventListener('click', () => {
+				closeDonationPopup();
+				if (window.notificationsModal) {
+					window.notificationsModal.classList.add('open');
+				}
+			});
+		}
+		document.querySelector('#listingForm').addEventListener('submit',async event=>{ event.preventDefault(); const data=Object.fromEntries(new FormData(event.target)); try { const response=await fetch('/api/listings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}); const result=await readApiResponse(response); if(!response.ok)throw new Error(result.message); listings.unshift(result.listing); updateListingCounts(); render(); modal.classList.remove('open'); event.target.reset(); districtSelect.disabled=true; districtSelect.innerHTML='<option value="">Önce il seçin</option>'; document.querySelector('#feed')?.scrollIntoView({behavior:'smooth'}); } catch(error) { alert(error.message || 'İlan oluşturulamadı. Önce giriş yapmalısın.'); } });
+		updateListingCounts(); render(); loadCurrentSession(); setInterval(refreshIndicators,15000); setInterval(()=>{ listings.forEach(item=>{ item.age=listingAge(item); }); updateListingDistances(); updateListingCounts(); render(); applyCityFilter(); },15000); fetch('/api/listings').then(async response=>{ if(!response.ok)return; const result=await readApiResponse(response); if(result?.listings?.length){ listings.unshift(...result.listings); updateListingDistances(); updateListingCounts(); render(); applyCityFilter(); } }).catch(()=>{}); 
+	</script>
+</body>
+</html>
+
+

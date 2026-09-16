@@ -11,18 +11,41 @@ import 'dotenv/config';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
+app.set('trust proxy', 1);
+
+app.use(session({
+  secret: process.env.NEXTAUTH_SECRET || 'ustasantiye_gizli_anahtar',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
 const databasePath = path.join(__dirname, 'data.json');
 const port = Number(process.env.PORT || 3000);
 const baseUrl = process.env.BASE_URL || `http://localhost:${port}`;
+const isProductionHttps = process.env.NODE_ENV === 'production' || process.env.SESSION_SECURE === 'true' || /^https:/i.test(String(process.env.BASE_URL || ''));
+app.set('trust proxy', 1);
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const hasGoogleConfiguration = Boolean(googleClientId && googleClientSecret && !googleClientId.startsWith('BURAYA_') && !googleClientSecret.startsWith('BURAYA_'));
 const googleRedirectUri = process.env.GOOGLE_REDIRECT_URI || `${baseUrl}/api/auth/google/callback`;
+function getRequestProtocol(request) {
+  const forwardedProto = (request.headers['x-forwarded-proto'] || '').split(',')[0].trim();
+  if (forwardedProto) return forwardedProto;
+  return request.protocol || 'http';
+}
 function getGoogleRedirectUri(request) {
   const requestHost = request.get('host');
+  const requestProtocol = getRequestProtocol(request);
   const configuredUrl = new URL(googleRedirectUri);
+  const requestUrl = new URL(`${requestProtocol}://${requestHost}`);
   if (requestHost === configuredUrl.host) return googleRedirectUri;
+  if (requestUrl.host === configuredUrl.host) return googleRedirectUri;
   if (requestHost === `localhost:${port}` || requestHost === `127.0.0.1:${port}`) return `http://${requestHost}/api/auth/google/callback`;
+  if (configuredUrl.host.endsWith('.' + requestHost) || requestHost.endsWith('.' + configuredUrl.host)) return googleRedirectUri;
   return googleRedirectUri;
 }
 const plans = {
@@ -103,7 +126,18 @@ const mailTransport = hasMailConfiguration
 app.disable('x-powered-by');
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: false }));
-app.use(session({ secret: process.env.SESSION_SECRET || 'ustasantiye-local-session-secret', resave: false, saveUninitialized: false, cookie: { httpOnly: true, sameSite: 'lax', maxAge: 7 * 24 * 60 * 60 * 1000 } }));
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'ustasantiye-local-session-secret',
+  resave: false,
+  saveUninitialized: false,
+  proxy: true,
+  cookie: {
+    httpOnly: true,
+    sameSite: isProductionHttps ? 'none' : 'lax',
+    secure: isProductionHttps,
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  }
+}));
 app.use((request, response, next) => {
   response.setHeader('X-Frame-Options', 'DENY');
   response.setHeader('X-Content-Type-Options', 'nosniff');
@@ -116,6 +150,17 @@ app.use(express.static(__dirname));
 function saveDatabase() {
   database.users = [...registeredUsers.values()];
   fs.writeFileSync(databasePath, JSON.stringify(database, null, 2), 'utf8');
+}
+
+function getCookieValue(request, name) {
+  const cookieHeader = request.headers.cookie || '';
+  const match = cookieHeader.split(';').map(part => part.trim()).find(part => part.startsWith(`${name}=`));
+  if (!match) return '';
+  return decodeURIComponent(match.slice(name.length + 1));
+}
+
+function clearCookie(response, name) {
+  response.clearCookie(name, { path: '/', httpOnly: true, sameSite: isProductionHttps ? 'none' : 'lax', secure: isProductionHttps });
 }
 
 function getSessionUser(request) {
@@ -612,20 +657,46 @@ app.delete('/api/admin/announcements/:id', requireSessionUser, (request, respons
 app.get('/api/auth/google/start', (request, response) => {
   if (!hasGoogleConfiguration) return response.status(503).json({ status: 'failed', message: 'Google girişi için .env dosyasındaki GOOGLE_CLIENT_ID ve GOOGLE_CLIENT_SECRET satırlarını doldurun.' });
   const state = crypto.randomBytes(24).toString('hex');
-  request.session.googleState = state;
   const redirectUri = getGoogleRedirectUri(request);
+  request.session.googleState = state;
   request.session.googleRedirectUri = redirectUri;
-  const params = new URLSearchParams({ client_id: googleClientId, redirect_uri: redirectUri, response_type: 'code', scope: 'openid email profile', state, access_type: 'offline', prompt: 'select_account' });
-  return response.json({ status: 'success', url: `https://accounts.google.com/o/oauth2/v2/auth?${params}` });
+
+  response.cookie('google_oauth_state', state, {
+    httpOnly: true,
+    sameSite: isProductionHttps ? 'none' : 'lax',
+    secure: isProductionHttps,
+    path: '/',
+    maxAge: 5 * 60 * 1000
+  });
+  response.cookie('google_oauth_redirect_uri', redirectUri, {
+    httpOnly: true,
+    sameSite: isProductionHttps ? 'none' : 'lax',
+    secure: isProductionHttps,
+    path: '/',
+    maxAge: 5 * 60 * 1000
+  });
+
+  request.session.save(error => {
+    if (error) {
+      return response.status(500).json({ status: 'failed', message: 'Google güvenlik oturumu kaydedilemedi.' });
+    }
+    const params = new URLSearchParams({ client_id: googleClientId, redirect_uri: redirectUri, response_type: 'code', scope: 'openid email profile', state, access_type: 'offline', prompt: 'select_account' });
+    return response.json({ status: 'success', url: `https://accounts.google.com/o/oauth2/v2/auth?${params}` });
+  });
 });
 
 app.get('/api/auth/google/callback', async (request, response) => {
   const { code, state, error } = request.query;
   if (error) return response.redirect(`/?google_error=${encodeURIComponent('Google girişi iptal edildi.')}`);
-  if (!code || !state || state !== request.session.googleState) return response.redirect(`/?google_error=${encodeURIComponent('Google güvenlik doğrulaması başarısız oldu.')}`);
-  const redirectUri = request.session.googleRedirectUri || getGoogleRedirectUri(request);
+  const storedState = getCookieValue(request, 'google_oauth_state') || request.session.googleState;
+  const storedRedirectUri = getCookieValue(request, 'google_oauth_redirect_uri') || request.session.googleRedirectUri;
+  if (!code || !state || state !== storedState) return response.redirect(`/?google_error=${encodeURIComponent('Google güvenlik doğrulaması başarısız oldu.')}`);
+  const redirectUri = storedRedirectUri || getGoogleRedirectUri(request);
   delete request.session.googleState;
   delete request.session.googleRedirectUri;
+  clearCookie(response, 'google_oauth_state');
+  clearCookie(response, 'google_oauth_redirect_uri');
+  request.session.save(() => {});
   try {
     const tokenResponse = await fetch('https://oauth2.googleapis.com/token', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ code, client_id: googleClientId, client_secret: googleClientSecret, redirect_uri: redirectUri, grant_type: 'authorization_code' }) });
     const tokens = await tokenResponse.json();
